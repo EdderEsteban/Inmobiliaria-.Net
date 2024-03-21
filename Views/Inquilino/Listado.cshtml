@@ -5,26 +5,27 @@
 
 <div class="text-center">
     <h1 class="display-4">Tabla de Inquilinos</h1>
+    <a href="/Inquilino/Crear">Crear Inquilino</a>
     <table class="table table-sm table-striped table-hover">
         <tr>
-            <th>Id</th>
             <th>Nombre</th>
             <th>Apellido</th>
             <th>DNI</th>
             <th>Direccion</th>
             <th>Telefono</th>
             <th>Correo</th>
+            <th>Acciones</th>
         </tr>
         @foreach (var inquilino in Model)
         {
             <tr>
-                <td>@inquilino.Id_inquilino</td>
                 <td>@inquilino.Nombre</td>
                 <td>@inquilino.Apellido</td>
                 <td>@inquilino.Dni</td>
                 <td>@inquilino.Direccion</td>
                 <td>@inquilino.Telefono</td>
                 <td>@inquilino.Correo</td>
+                <td><a href="/Inquilino/Editar/@inquilino.Id_inquilino">Editar</a> | <a href="/Inquilino/Eliminar/@inquilino.Id_inquilino">Eliminar</a></td>
             </tr>
         }
     </table>
