@@ -1,0 +1,32 @@
+@model IList<Inquilino>
+@{
+    ViewData["Title"] = "Inquilinos";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Tabla de Inquilinos</h1>
+    <table class="table table-sm table-striped table-hover">
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+        </tr>
+        @foreach (var inquilino in Model)
+        {
+            <tr>
+                <td>@inquilino.Id_inquilino</td>
+                <td>@inquilino.Nombre</td>
+                <td>@inquilino.Apellido</td>
+                <td>@inquilino.Dni</td>
+                <td>@inquilino.Direccion</td>
+                <td>@inquilino.Telefono</td>
+                <td>@inquilino.Correo</td>
+            </tr>
+        }
+    </table>
+    
+</div>
