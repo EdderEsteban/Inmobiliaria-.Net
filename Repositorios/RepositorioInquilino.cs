@@ -79,5 +79,44 @@ namespace Inmobiliaria_.Net.Repositorios
             }
             return Id;
         }
+
+        public Inquilino? GetInquilino(int id)
+        {
+            Inquilino? inquilino = null;
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                var sql = @$"Select {nameof(Inquilino.Id_inquilino)}, {nameof(Inquilino.Nombre)}, {nameof(Inquilino.Apellido)}, 
+                {nameof(Inquilino.Dni)}, {nameof(Inquilino.Direccion)}, {nameof(Inquilino.Telefono)},{nameof(Inquilino.Correo)} 
+                FROM inquilino
+                WHERE {nameof(Inquilino.Id_inquilino)} = @id";
+
+                using (var comand = new MySqlCommand(sql, connection))
+                {
+                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Id_inquilino)}", id);
+                    connection.Open();
+                    using (var reader = comand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            inquilino = new Inquilino
+                            {
+                                Id_inquilino = reader.GetInt32(nameof(Inquilino.Id_inquilino)),
+                                Nombre = reader.GetString(nameof(Inquilino.Nombre)),
+                                Apellido = reader.GetString(nameof(Inquilino.Apellido)),
+                                Dni = reader.GetInt32(nameof(Inquilino.Dni)),
+                                Direccion = reader.GetString(nameof(Inquilino.Direccion)),
+                                Telefono = reader.GetString(nameof(Inquilino.Telefono)),
+                                Correo = reader.GetString(nameof(Inquilino.Correo)),
+                            };
+
+                        }
+                        connection.Close();
+                    }
+
+                }
+            }
+            return inquilino;
+        }
+
     }
 }

@@ -27,19 +27,28 @@ public class InquilinoController : Controller
     }
 
     public IActionResult GuardarInquilino(Inquilino inquilino)
-{
-    if (ModelState.IsValid)//Asegurarse q es valido el modelo
     {
-        RepositorioInquilino repo = new RepositorioInquilino();
-        repo.Guardar(inquilino);
-        return RedirectToAction(nameof(ListadoInquilinos));
+        if (ModelState.IsValid)//Asegurarse q es valido el modelo
+        {
+            RepositorioInquilino repo = new RepositorioInquilino();
+            repo.Guardar(inquilino);
+            return RedirectToAction(nameof(ListadoInquilinos));
+        }
+        return View("CrearInquilino", inquilino);
     }
-    return View("CrearInquilino", inquilino);
-}
 
     public IActionResult EditarInquilino(int id)
     {
-        return View();
+        if (id > 0)
+        {
+            RepositorioInquilino repo = new RepositorioInquilino();
+            var inquilino = repo.GetInquilino(id);
+            return View(inquilino);
+        }
+        else
+        {
+            return NotFound();
+        }
     }
 
     public IActionResult BorrarInquilino(int id)
