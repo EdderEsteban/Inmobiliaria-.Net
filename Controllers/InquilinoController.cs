@@ -14,11 +14,36 @@ public class InquilinoController : Controller
         _logger = logger;
     }
 
-    public IActionResult Listado()
+    public IActionResult ListadoInquilinos()
     {
         RepositorioInquilino repo = new RepositorioInquilino();
         var lista = repo.Listar();
         return View(lista);
     }
 
+    public IActionResult CrearInquilino()
+    {
+        return View();
+    }
+
+    public IActionResult GuardarInquilino(Inquilino inquilino)
+{
+    if (ModelState.IsValid)//Asegurarse q es valido el modelo
+    {
+        RepositorioInquilino repo = new RepositorioInquilino();
+        repo.Guardar(inquilino);
+        return RedirectToAction(nameof(ListadoInquilinos));
+    }
+    return View("CrearInquilino", inquilino);
+}
+
+    public IActionResult EditarInquilino(int id)
+    {
+        return View();
+    }
+
+    public IActionResult BorrarInquilino(int id)
+    {
+        return View();
+    }
 }

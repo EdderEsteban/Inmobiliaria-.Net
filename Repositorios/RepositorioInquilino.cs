@@ -1,5 +1,8 @@
 using MySql.Data.MySqlClient;
 using Inmobiliaria_.Net.Models;
+using System.Reflection.Metadata.Ecma335;
+using System.ComponentModel.Design;
+using Mysqlx.Connection;
 
 
 
@@ -44,6 +47,37 @@ namespace Inmobiliaria_.Net.Repositorios
                 }
             }
             return inquilinos;
+        }
+        // [Guardar]
+        public int Guardar(Inquilino inquilino)
+        {
+            int Id = 0;
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                var sql = @$"INSERT INTO inquilino ({nameof(Inquilino.Nombre)}, {nameof(Inquilino.Apellido)}, 
+                {nameof(Inquilino.Dni)}, {nameof(Inquilino.Direccion)}, {nameof(Inquilino.Telefono)}, {nameof(Inquilino.Correo)})
+                VALUES (@{nameof(Inquilino.Nombre)}, @{nameof(Inquilino.Apellido)}, @{nameof(Inquilino.Dni)},
+                @{nameof(Inquilino.Direccion)}, @{nameof(Inquilino.Telefono)}, @{nameof(Inquilino.Correo)});
+                SELECT LAST_INSERT_ID();";
+
+
+                using (var comand = new MySqlCommand(sql, connection))
+                {
+                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Nombre)}", inquilino.Nombre);
+                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Apellido)}", inquilino.Apellido);
+                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Dni)}", inquilino.Dni);
+                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Direccion)}", inquilino.Direccion);
+                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Telefono)}", inquilino.Telefono);
+                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Correo)}", inquilino.Correo);
+
+                    connection.Open();
+
+                    Id = Convert.ToInt32(comand.ExecuteScalar());
+                    inquilino.Id_inquilino = Id;
+                    connection.Close();
+                }
+            }
+            return Id;
         }
     }
 }

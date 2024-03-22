@@ -5,7 +5,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Tabla de Inquilinos</h1>
-    <a href="/Inquilino/Crear">Crear Inquilino</a>
+    <a asp-area="" asp-controller="Inquilino" asp-action="CrearInquilino">Crear</a>
     <table class="table table-sm table-striped table-hover">
         <tr>
             <th>Nombre</th>
@@ -25,8 +25,8 @@
                 <td>@inquilino.Direccion</td>
                 <td>@inquilino.Telefono</td>
                 <td>@inquilino.Correo</td>
-                <td><a href="/Inquilino/Editar/@inquilino.Id_inquilino">Editar</a> | <a
-                        href="/Inquilino/Eliminar/@inquilino.Id_inquilino">Eliminar</a></td>
+                <td><a asp-area="" asp-controller="Inquilino" asp-action="EditarInquilino" asp-route-id_inquilino="@inquilino.Id_inquilino">Editar</a> | 
+                <a asp-area="" asp-controller="Inquilino" asp-action="BorrarInquilino" asp-route-id_inquilino="@inquilino.Id_inquilino">Borrar</a></td>
             </tr>
         }
     </table>
