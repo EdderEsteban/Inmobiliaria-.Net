@@ -10,7 +10,7 @@ namespace Inmobiliaria_.Net.Repositorios
 {
     public class RepositorioInquilino
     {
-        readonly string ConnectionString = "Server=localhost;Database=inmobiliaria_edder;User=root;Password=;";
+        readonly string ConnectionString = "Server=localhost;Database=inmobiliaria_edder_matias;User=root;Password=;";
         public RepositorioInquilino()
         {
 
@@ -43,13 +43,14 @@ namespace Inmobiliaria_.Net.Repositorios
                                 Correo = reader.GetString(nameof(Inquilino.Correo))
                             });
                         }
+                        connection.Close();
                     }
                 }
             }
             return inquilinos;
         }
         // [Guardar]
-        public int Guardar(Inquilino inquilino)
+        public int GuardarNuevo(Inquilino inquilino)
         {
             int Id = 0;
             using (var connection = new MySqlConnection(ConnectionString))
@@ -80,7 +81,8 @@ namespace Inmobiliaria_.Net.Repositorios
             return Id;
         }
 
-        public Inquilino? GetInquilino(int id)
+        // [Obtener Inquilino]
+        public Inquilino? ObtenerInquilino(int id) 
         {
             Inquilino? inquilino = null;
             using (var connection = new MySqlConnection(ConnectionString))
@@ -88,7 +90,7 @@ namespace Inmobiliaria_.Net.Repositorios
                 var sql = @$"Select {nameof(Inquilino.Id_inquilino)}, {nameof(Inquilino.Nombre)}, {nameof(Inquilino.Apellido)}, 
                 {nameof(Inquilino.Dni)}, {nameof(Inquilino.Direccion)}, {nameof(Inquilino.Telefono)},{nameof(Inquilino.Correo)} 
                 FROM inquilino
-                WHERE {nameof(Inquilino.Id_inquilino)} = @id";
+                WHERE {nameof(Inquilino.Id_inquilino)} = @{nameof(Inquilino.Id_inquilino)}";
 
                 using (var comand = new MySqlCommand(sql, connection))
                 {
@@ -106,17 +108,47 @@ namespace Inmobiliaria_.Net.Repositorios
                                 Dni = reader.GetInt32(nameof(Inquilino.Dni)),
                                 Direccion = reader.GetString(nameof(Inquilino.Direccion)),
                                 Telefono = reader.GetString(nameof(Inquilino.Telefono)),
-                                Correo = reader.GetString(nameof(Inquilino.Correo)),
-                            };
+                                Correo = reader.GetString(nameof(Inquilino.Correo))
 
+                            };
                         }
                         connection.Close();
                     }
-
                 }
             }
             return inquilino;
         }
+        
+        // [Actualizar Inquilino]
+        public void ActualizarInquilino(Inquilino inquilino)
+{
+    using (var connection = new MySqlConnection(ConnectionString))
+    {
+        var sql = @$"UPDATE inquilino SET
+                    {nameof(Inquilino.Nombre)} = @{nameof(Inquilino.Nombre)},
+                    {nameof(Inquilino.Apellido)} = @{nameof(Inquilino.Apellido)},
+                    {nameof(Inquilino.Dni)} = @{nameof(Inquilino.Dni)},
+                    {nameof(Inquilino.Direccion)} = @{nameof(Inquilino.Direccion)},
+                    {nameof(Inquilino.Telefono)} = @{nameof(Inquilino.Telefono)},
+                    {nameof(Inquilino.Correo)} = @{nameof(Inquilino.Correo)}
+                WHERE {nameof(Inquilino.Id_inquilino)} = @{nameof(Inquilino.Id_inquilino)}";
+
+        using (var command = new MySqlCommand(sql, connection))
+        {
+            command.Parameters.AddWithValue($"@{nameof(Inquilino.Nombre)}", inquilino.Nombre);
+            command.Parameters.AddWithValue($"@{nameof(Inquilino.Apellido)}", inquilino.Apellido);
+            command.Parameters.AddWithValue($"@{nameof(Inquilino.Dni)}", inquilino.Dni);
+            command.Parameters.AddWithValue($"@{nameof(Inquilino.Direccion)}", inquilino.Direccion);
+            command.Parameters.AddWithValue($"@{nameof(Inquilino.Telefono)}", inquilino.Telefono);
+            command.Parameters.AddWithValue($"@{nameof(Inquilino.Correo)}", inquilino.Correo);
+            command.Parameters.AddWithValue($"@{nameof(Inquilino.Id_inquilino)}", inquilino.Id_inquilino);
+
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
+    }
+}
 
     }
 }

@@ -31,7 +31,7 @@ public class InquilinoController : Controller
         if (ModelState.IsValid)//Asegurarse q es valido el modelo
         {
             RepositorioInquilino repo = new RepositorioInquilino();
-            repo.Guardar(inquilino);
+            repo.GuardarNuevo(inquilino);
             return RedirectToAction(nameof(ListadoInquilinos));
         }
         return View("CrearInquilino", inquilino);
@@ -39,16 +39,30 @@ public class InquilinoController : Controller
 
     public IActionResult EditarInquilino(int id)
     {
+        Console.WriteLine(id);
         if (id > 0)
         {
+            Console.WriteLine("entro por Si");
             RepositorioInquilino repo = new RepositorioInquilino();
-            var inquilino = repo.GetInquilino(id);
+            var inquilino = repo.ObtenerInquilino(id);
             return View(inquilino);
         }
         else
         {
-            return NotFound();
+            Console.WriteLine("entro por No");
+            return View();
         }
+    }
+
+    public IActionResult ModificarInquilino(Inquilino inquilino)
+    {
+         if (ModelState.IsValid)//Asegurarse q es valido el modelo
+        {
+            RepositorioInquilino repo = new RepositorioInquilino();
+            repo.ActualizarInquilino(inquilino);
+            return RedirectToAction(nameof(ListadoInquilinos));
+        }
+        return View("EditarInquilino",inquilino);
     }
 
     public IActionResult BorrarInquilino(int id)
