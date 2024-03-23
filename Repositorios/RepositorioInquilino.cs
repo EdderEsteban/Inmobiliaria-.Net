@@ -17,7 +17,7 @@ namespace Inmobiliaria_.Net.Repositorios
         }
 
         //[Listar]
-        public IList<Inquilino> Listar()
+        public IList<Inquilino> ListarInquilinos()
         {
             var inquilinos = new List<Inquilino>();
             using (var connection = new MySqlConnection(ConnectionString))
@@ -150,6 +150,7 @@ namespace Inmobiliaria_.Net.Repositorios
     }
 }
 
+        // [Eliminar Inquilino]
         public int EliminarInquilino(int id)
         {
             using (var connection = new MySqlConnection(ConnectionString))

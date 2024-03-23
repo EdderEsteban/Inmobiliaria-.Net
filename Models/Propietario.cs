@@ -2,20 +2,33 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Inmobiliaria_.Net.Models;
 
+
 public class Propietario
 {
     [Key]
-    public int? Id_inquilino { get; set; }
-    [Required]
+    public int Id_Propietario { get; set; }
+
+    [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
+    [StringLength(50, ErrorMessage = "El campo Nombre debe tener como máximo {1} caracteres.")]
     public string? Nombre { get; set; }
-    [Required]
+
+    [Required(ErrorMessage = "El campo Apellido es obligatorio.")]
+    [StringLength(50, ErrorMessage = "El campo Apellido debe tener como máximo {1} caracteres.")]
     public string? Apellido { get; set; }
-    [Required]
-    public string? Dni { get; set; }
-    [Required]
+
+    [Required(ErrorMessage = "El campo Dni es obligatorio.")]
+    [RegularExpression(@"^\d{8}$", ErrorMessage = "El DNI debe contener exactamente 8 dígitos.")]
+    public int Dni { get; set; }
+
+    [Required(ErrorMessage = "El campo Dirección es obligatorio.")]
+    [StringLength(100, ErrorMessage = "El campo Dirección debe tener como máximo {1} caracteres.")]
     public string? Direccion { get; set; }
-    [Required]
+
+    [Required(ErrorMessage = "El campo Teléfono es obligatorio.")]
+    [StringLength(20, ErrorMessage = "El campo Teléfono debe tener como máximo {1} caracteres.")]
     public string? Telefono { get; set; }
-    [Required]
-    public string? Email { get; set; }    
+
+    [Required(ErrorMessage = "El campo Correo es obligatorio.")]
+    [EmailAddress(ErrorMessage = "El campo Correo no tiene un formato de dirección de correo electrónico válido.")]
+    public string? Correo { get; set; }
 }

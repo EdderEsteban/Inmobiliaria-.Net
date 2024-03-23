@@ -17,7 +17,7 @@ public class InquilinoController : Controller
     public IActionResult ListadoInquilinos()
     {
         RepositorioInquilino repo = new RepositorioInquilino();
-        var lista = repo.Listar();
+        var lista = repo.ListarInquilinos();
         return View(lista);
     }
 
@@ -61,12 +61,7 @@ public class InquilinoController : Controller
         }
         return View("EditarInquilino",inquilino);
     }
-
-    public IActionResult BorrarInquilino(int id)
-    {
-        return View();
-    }
-
+ 
     public IActionResult EliminarInquilino(int id)
     {
             RepositorioInquilino repo = new RepositorioInquilino();

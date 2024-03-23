@@ -1,0 +1,34 @@
+@model IList<Propietario>
+@{
+    ViewData["Title"] = "Propietarios";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Listado de Propietarios</h1>
+    <a asp-area="" asp-controller="Propietario" asp-action="CrearPropietario">Crear</a>
+    <table class="table table-sm table-striped table-hover">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+        </tr>
+        @foreach (var propietario in Model)
+        {
+            <tr>
+                <td>@propietario.Nombre</td>
+                <td>@propietario.Apellido</td>
+                <td>@propietario.Dni</td>
+                <td>@propietario.Direccion</td>
+                <td>@propietario.Telefono</td>
+                <td>@propietario.Correo</td>
+                <td><a asp-area="" asp-controller="Propietario" asp-action="EditarPropietario" asp-route-Id="@propietario.Id_Propietario">Editar</a> | 
+                <a asp-area="" asp-controller="Propietario" asp-action="EliminarPropietario" asp-route-Id="@propietario.Id_Propietario">Borrar</a></td>
+            </tr>
+        }
+    </table>
+
+</div>
