@@ -150,5 +150,21 @@ namespace Inmobiliaria_.Net.Repositorios
     }
 }
 
+        public int EliminarInquilino(int id)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                var sql = @$"DELETE FROM inquilino 
+                WHERE {nameof(Inquilino.Id_inquilino)} = @{nameof(Inquilino.Id_inquilino)}";
+                using (var command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Id_inquilino)}", id);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            return 0;
+        }
     }
 }

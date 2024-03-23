@@ -39,17 +39,14 @@ public class InquilinoController : Controller
 
     public IActionResult EditarInquilino(int id)
     {
-        Console.WriteLine(id);
         if (id > 0)
         {
-            Console.WriteLine("entro por Si");
             RepositorioInquilino repo = new RepositorioInquilino();
             var inquilino = repo.ObtenerInquilino(id);
             return View(inquilino);
         }
         else
         {
-            Console.WriteLine("entro por No");
             return View();
         }
     }
@@ -68,5 +65,12 @@ public class InquilinoController : Controller
     public IActionResult BorrarInquilino(int id)
     {
         return View();
+    }
+
+    public IActionResult EliminarInquilino(int id)
+    {
+            RepositorioInquilino repo = new RepositorioInquilino();
+            repo.EliminarInquilino(id);
+            return RedirectToAction(nameof(ListadoInquilinos));
     }
 }
