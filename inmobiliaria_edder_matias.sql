@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-03-2024 a las 17:03:40
+-- Tiempo de generación: 23-03-2024 a las 03:26:06
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `inmobiliaria_edder`
+-- Base de datos: `inmobiliaria_edder_matias`
 --
 
 -- --------------------------------------------------------
@@ -73,7 +73,8 @@ CREATE TABLE `inquilino` (
 INSERT INTO `inquilino` (`id_inquilino`, `nombre`, `apellido`, `dni`, `direccion`, `telefono`, `correo`) VALUES
 (1, 'Edder', 'Santibañez', 93962239, 'San Luis', '2664271316', 'edder@santy.com'),
 (2, 'Diego', 'Orellano', 98765432, 'Santa Fe', '2665122345', 'diego@orellano.com'),
-(6, 'Mauricio', 'Ferrieres', 45685212, 'San Luis', '2664854565', 'mauricio@ferrieres.com');
+(6, 'Mauricio', 'Ferrieres', 45685212, 'San Luis', '2664854565', 'mauricio@ferrieres.com'),
+(8, 'Fatima', 'Lebri', 29426271, 'San Luis', '2664718225', 'fatima@lebri.com');
 
 -- --------------------------------------------------------
 
@@ -169,7 +170,7 @@ ALTER TABLE `inmueble`
 -- AUTO_INCREMENT de la tabla `inquilino`
 --
 ALTER TABLE `inquilino`
-  MODIFY `id_inquilino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_inquilino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
