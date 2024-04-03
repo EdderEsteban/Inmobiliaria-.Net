@@ -17,7 +17,7 @@ public class Inquilino
     public string? Apellido { get; set; }
 
     [Required(ErrorMessage = "El campo Dni es obligatorio.")]
-    [RegularExpression(@"^\d{8}$", ErrorMessage = "El DNI debe contener exactamente 8 dígitos.")]
+    [RegularExpression(@"^\d{7,8}$", ErrorMessage = "El DNI debe contener exactamente 7 u 8 dígitos.")]
     public int Dni { get; set; }
 
     [Required(ErrorMessage = "El campo Dirección es obligatorio.")]
@@ -31,4 +31,10 @@ public class Inquilino
     [Required(ErrorMessage = "El campo Correo es obligatorio.")]
     [EmailAddress(ErrorMessage = "El campo Correo no tiene un formato de dirección de correo electrónico válido.")]
     public string? Correo { get; set; }
+
+    public int Id_usuario { get; set; }
+
+    public DateTime Fecha { get; set; } = DateTime.Now;
+
+    
 }

@@ -1,0 +1,34 @@
+@model IList<Inquilino>
+@{
+    ViewData["Title"] = "Inquilinos";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Listado de Inquilinos</h1>
+    <a asp-area="" asp-controller="Inquilino" asp-action="CrearInquilino">Crear</a>
+    <table class="table table-sm table-striped table-hover">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+            <th>Direccion</th>
+            <th>Telefono</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+        </tr>
+        @foreach (var inquilino in Model)
+        {
+            <tr>
+                <td>@inquilino.Nombre</td>
+                <td>@inquilino.Apellido</td>
+                <td>@inquilino.Dni</td>
+                <td>@inquilino.Direccion</td>
+                <td>@inquilino.Telefono</td>
+                <td>@inquilino.Correo</td>
+                <td><a asp-area="" asp-controller="Inquilino" asp-action="EditarInquilino" asp-route-Id="@inquilino.Id_inquilino">Editar</a> | 
+                <a asp-area="" asp-controller="Inquilino" asp-action="EliminarInquilino" asp-route-Id="@inquilino.Id_inquilino">Borrar</a></td>
+            </tr>
+        }
+    </table>
+
+</div>

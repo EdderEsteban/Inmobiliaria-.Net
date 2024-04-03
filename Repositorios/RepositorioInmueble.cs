@@ -8,49 +8,65 @@ using Mysqlx.Connection;
 
 namespace Inmobiliaria_.Net.Repositorios
 {
-    public class RepositorioInquilino
+    public class RepositorioInmueble
     {
         readonly string ConnectionString = "Server=localhost;Database=inmobiliaria_edder_matias;User=root;Password=;";
-        public RepositorioInquilino()
+        public RepositorioInmueble()
         {
 
         }
 
         //[Listar]
-        public IList<Inquilino> ListarInquilinos()
-        {
-            var inquilinos = new List<Inquilino>();
-            using (var connection = new MySqlConnection(ConnectionString))
-            {
-                var sql = @$"Select {nameof(Inquilino.Id_inquilino)}, {nameof(Inquilino.Nombre)}, {nameof(Inquilino.Apellido)}, 
-                {nameof(Inquilino.Dni)}, {nameof(Inquilino.Direccion)}, {nameof(Inquilino.Telefono)},{nameof(Inquilino.Correo)} FROM inquilino";
+       public IList<Inmueble> ListarInmuebles()
+{
+    var inmuebles = new List<Inmueble>();
+    using (var connection = new MySqlConnection(ConnectionString))
+    {
+        var sql = @" SELECT Id_inmueble, Direccion, Uso, Id_tipo, ti.Nombre AS TipoInmueble, Cantidad_Ambientes,
+                Precio_Alquiler, Latitud, Longitud, Id_propietario, p.Nombre AS NombrePropietario, p.Apellido AS ApellidoPropietario
+            FROM 
+                inmueble i
+                INNER JOIN tipo_inmueble ti ON i.Id_tipo = ti.Id_tipo
+                INNER JOIN propietario p ON i.Id_propietario = p.Id_propietario";
 
-                using (var comand = new MySqlCommand(sql, connection))
-                {
-                    connection.Open();
-                    using (var reader = comand.ExecuteReader())
+        using (var command = new MySqlCommand(sql, connection))
+        {
+            connection.Open();
+                    using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            inquilinos.Add(new Inquilino
+                            var usoString = reader.GetString("Uso");
+                            var usoEnum = (UsoInmueble)Enum.Parse(typeof(UsoInmueble), usoString);
+                            inmuebles.Add(new Inmueble
                             {
-                                Id_inquilino = reader.GetInt32(nameof(Inquilino.Id_inquilino)),
-                                Nombre = reader.GetString(nameof(Inquilino.Nombre)),
-                                Apellido = reader.GetString(nameof(Inquilino.Apellido)),
-                                Dni = reader.GetInt32(nameof(Inquilino.Dni)),
-                                Direccion = reader.GetString(nameof(Inquilino.Direccion)),
-                                Telefono = reader.GetString(nameof(Inquilino.Telefono)),
-                                Correo = reader.GetString(nameof(Inquilino.Correo))
+                                Id_inmueble = reader.GetInt32(nameof(Inmueble.Id_inmueble)),
+                                Direccion = reader.GetString(nameof(Inmueble.Direccion)),
+                                Uso = usoEnum,
+                                Tipo = new InmuebleTipo
+                                {
+                                    Nombre = reader.GetString(nameof(InmuebleTipo.Nombre)),
+                                },
+                                Cantidad_Ambientes = reader.GetInt32(nameof(Inmueble.Cantidad_Ambientes)),
+                                Precio_Alquiler = reader.GetDecimal(nameof(Inmueble.Precio_Alquiler)),
+                                Latitud = reader.GetDecimal(nameof(Inmueble.Latitud)),
+                                Longitud = reader.GetDecimal(nameof(Inmueble.Longitud)),
+                                Propietario = new Propietario
+                                {
+                                    Nombre = reader.GetString(nameof(Propietario.Nombre)),
+                                    Apellido = reader.GetString(nameof(Propietario.Apellido)),
+                                }
                             });
                         }
                         connection.Close();
-                    }
-                }
-            }
-            return inquilinos;
+                    }  
         }
+    }
+    return inmuebles;
+}
+
         // [Guardar]
-        public int GuardarNuevo(Inquilino inquilino)
+        /*public int GuardarNuevo(Inquilino inquilino)
         {
             int Id = 0;
             using (var connection = new MySqlConnection(ConnectionString))
@@ -166,6 +182,6 @@ namespace Inmobiliaria_.Net.Repositorios
                 }
             }
             return 0;
-        }
+        }*/
     }
 }
