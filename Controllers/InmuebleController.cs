@@ -16,8 +16,8 @@ public class InmuebleController : Controller
 
     public IActionResult ListadoInmuebles()
     {
-        RepositorioInquilino repo = new RepositorioInquilino();
-        var lista = repo.ListarInquilinos();
+        RepositorioInmueble repo = new RepositorioInmueble();
+        var lista = repo.ListarInmuebles();
         return View(lista);
     }
 

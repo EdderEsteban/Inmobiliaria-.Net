@@ -1,32 +1,42 @@
-@model IList<Inquilino>
+@model IList<Inmueble>
 @{
-    ViewData["Title"] = "Inquilinos";
+    ViewData["Title"] = "Inmuebles";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Listado de Inquilinos</h1>
-    <a asp-area="" asp-controller="Inquilino" asp-action="CrearInquilino">Crear</a>
+    <h1 class="display-4">Listado de Inmuebles</h1>
+
     <table class="table table-sm table-striped table-hover">
         <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>DNI</th>
             <th>Direccion</th>
-            <th>Telefono</th>
-            <th>Correo</th>
-            <th>Acciones</th>
+            <th>Uso</th>
+            <th>Tipo</th>
+            <th>Ambientes</th>
+            <th>Precio</th>
+            <th>Latitud y Longitud</th>
+            <th>Propietario</th>
         </tr>
-        @foreach (var inquilino in Model)
+        @foreach (var inmueble in Model)
         {
             <tr>
-                <td>@inquilino.Nombre</td>
-                <td>@inquilino.Apellido</td>
-                <td>@inquilino.Dni</td>
-                <td>@inquilino.Direccion</td>
-                <td>@inquilino.Telefono</td>
-                <td>@inquilino.Correo</td>
-                <td><a asp-area="" asp-controller="Inquilino" asp-action="EditarInquilino" asp-route-Id="@inquilino.Id_inquilino">Editar</a> | 
-                <a asp-area="" asp-controller="Inquilino" asp-action="EliminarInquilino" asp-route-Id="@inquilino.Id_inquilino">Borrar</a></td>
+                <td>@(inmueble.Direccion)</td>
+                <td>@(inmueble.Uso)</td>
+                <td>@(inmueble?.Tipo?.Tipo)</td>
+                <td>@(inmueble?.Cantidad_Ambientes)</td>
+                <td>@(inmueble?.Precio_Alquiler)</td>
+                <td>
+                    <a href="https://www.google.com/maps/search/?api=1&query=@inmueble.Latitud,@inmueble.Longitud"
+                        target="_blank">
+                        @($"{inmueble.Latitud}, {inmueble.Longitud}")
+                    </a>
+                </td>
+
+                <td>@($"{inmueble.Propietario?.Nombre} {inmueble.Propietario?.Apellido}" ?? "")</td>
+                <td><a asp-area="" asp-controller="Inmueble" asp-action="EditarInmueble"
+                        asp-route-Id="@inmueble.Id_inmueble">Editar</a> |
+                    <a asp-area="" asp-controller="Inmueble" asp-action="EliminarInmueble"
+                        asp-route-Id="@inmueble.Id_inmueble">Borrar</a>
+                </td>
             </tr>
         }
     </table>

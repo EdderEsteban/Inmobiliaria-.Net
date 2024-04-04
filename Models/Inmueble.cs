@@ -26,10 +26,10 @@ namespace Inmobiliaria_.Net.Models
         public decimal Precio_Alquiler { get; set; }
 
         [Required(ErrorMessage = "El campo Latitud es obligatorio.")]
-        public decimal Latitud { get; set; }
+        public string? Latitud { get; set; }
 
         [Required(ErrorMessage = "El campo Longitud es obligatorio.")]
-        public decimal Longitud { get; set; }
+        public string? Longitud { get; set; }
 
         public int Id_propietario { get; set; }
 
@@ -41,10 +41,11 @@ namespace Inmobiliaria_.Net.Models
 
     }
 
-    public enum UsoInmueble
+    public enum UsoInmueble     
+    
     {
-        Comercial,
-        Residencial
+        Comercial = 1,
+        Residencial = 2
     }
 }
 

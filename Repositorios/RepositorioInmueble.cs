@@ -22,8 +22,8 @@ namespace Inmobiliaria_.Net.Repositorios
     var inmuebles = new List<Inmueble>();
     using (var connection = new MySqlConnection(ConnectionString))
     {
-        var sql = @" SELECT Id_inmueble, Direccion, Uso, Id_tipo, ti.Nombre AS TipoInmueble, Cantidad_Ambientes,
-                Precio_Alquiler, Latitud, Longitud, Id_propietario, p.Nombre AS NombrePropietario, p.Apellido AS ApellidoPropietario
+        var sql = @" SELECT i.Id_inmueble, i.Direccion, i.Uso, i.Id_tipo, ti.Tipo AS TipoInmueble, i.Cantidad_Ambientes,
+                i.Precio_Alquiler, i.Latitud, i.Longitud, i.Id_propietario, p.Nombre AS NombrePropietario, p.Apellido AS ApellidoPropietario
             FROM 
                 inmueble i
                 INNER JOIN tipo_inmueble ti ON i.Id_tipo = ti.Id_tipo
@@ -36,27 +36,31 @@ namespace Inmobiliaria_.Net.Repositorios
                     {
                         while (reader.Read())
                         {
-                            var usoString = reader.GetString("Uso");
-                            var usoEnum = (UsoInmueble)Enum.Parse(typeof(UsoInmueble), usoString);
+                            //Manejo de los Enum en C#
+                            string uso =reader.GetString(nameof(Inmueble.Uso));
+                            UsoInmueble usoEnum;
+                            Enum.TryParse(uso , out usoEnum);
+                            //Fin Manejo de los Enum en C#
+                            
                             inmuebles.Add(new Inmueble
                             {
                                 Id_inmueble = reader.GetInt32(nameof(Inmueble.Id_inmueble)),
                                 Direccion = reader.GetString(nameof(Inmueble.Direccion)),
-                                Uso = usoEnum,
+                                Uso=usoEnum,                           
                                 Tipo = new InmuebleTipo
                                 {
-                                    Nombre = reader.GetString(nameof(InmuebleTipo.Nombre)),
+                                    Tipo = reader.GetString("TipoInmueble"),
                                 },
                                 Cantidad_Ambientes = reader.GetInt32(nameof(Inmueble.Cantidad_Ambientes)),
                                 Precio_Alquiler = reader.GetDecimal(nameof(Inmueble.Precio_Alquiler)),
-                                Latitud = reader.GetDecimal(nameof(Inmueble.Latitud)),
-                                Longitud = reader.GetDecimal(nameof(Inmueble.Longitud)),
+                                Latitud = reader.GetString(nameof(Inmueble.Latitud)),
+                                Longitud = reader.GetString(nameof(Inmueble.Longitud)),
                                 Propietario = new Propietario
                                 {
-                                    Nombre = reader.GetString(nameof(Propietario.Nombre)),
-                                    Apellido = reader.GetString(nameof(Propietario.Apellido)),
+                                    Nombre = reader.GetString("NombrePropietario"),
+                                    Apellido = reader.GetString("ApellidoPropietario"),
                                 }
-                            });
+                            });                            
                         }
                         connection.Close();
                     }  
