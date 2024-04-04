@@ -50,8 +50,8 @@ CREATE TABLE `inmueble` (
   `id_tipo` int(11) DEFAULT NULL,
   `cantidad_ambientes` int(11) DEFAULT NULL,
   `precio_alquiler` decimal(10,2) DEFAULT NULL,
-  `latitud` decimal(10,8) DEFAULT NULL,
-  `longitud` decimal(11,8) DEFAULT NULL,
+  `latitud` varchar(255) DEFAULT NULL,
+  `longitud` varchar(255) DEFAULT NULL,
   `id_propietario` int(11) DEFAULT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp()
@@ -134,7 +134,7 @@ INSERT INTO `propietario` (`id_propietario`, `nombre`, `apellido`, `dni`, `direc
 
 CREATE TABLE `tipo_inmueble` (
   `id_tipo` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL
+  `tipo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

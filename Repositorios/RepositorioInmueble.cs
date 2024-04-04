@@ -17,36 +17,36 @@ namespace Inmobiliaria_.Net.Repositorios
         }
 
         //[Listar]
-       public IList<Inmueble> ListarInmuebles()
-{
-    var inmuebles = new List<Inmueble>();
-    using (var connection = new MySqlConnection(ConnectionString))
-    {
-        var sql = @" SELECT i.Id_inmueble, i.Direccion, i.Uso, i.Id_tipo, ti.Tipo AS TipoInmueble, i.Cantidad_Ambientes,
+        public IList<Inmueble> ListarInmuebles()
+        {
+            var inmuebles = new List<Inmueble>();
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                var sql = @" SELECT i.Id_inmueble, i.Direccion, i.Uso, i.Id_tipo, ti.Tipo AS TipoInmueble, i.Cantidad_Ambientes,
                 i.Precio_Alquiler, i.Latitud, i.Longitud, i.Id_propietario, p.Nombre AS NombrePropietario, p.Apellido AS ApellidoPropietario
             FROM 
                 inmueble i
                 INNER JOIN tipo_inmueble ti ON i.Id_tipo = ti.Id_tipo
                 INNER JOIN propietario p ON i.Id_propietario = p.Id_propietario";
 
-        using (var command = new MySqlCommand(sql, connection))
-        {
-            connection.Open();
+                using (var command = new MySqlCommand(sql, connection))
+                {
+                    connection.Open();
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             //Manejo de los Enum en C#
-                            string uso =reader.GetString(nameof(Inmueble.Uso));
+                            string uso = reader.GetString(nameof(Inmueble.Uso));
                             UsoInmueble usoEnum;
-                            Enum.TryParse(uso , out usoEnum);
+                            Enum.TryParse(uso, out usoEnum);
                             //Fin Manejo de los Enum en C#
-                            
+
                             inmuebles.Add(new Inmueble
                             {
                                 Id_inmueble = reader.GetInt32(nameof(Inmueble.Id_inmueble)),
                                 Direccion = reader.GetString(nameof(Inmueble.Direccion)),
-                                Uso=usoEnum,                           
+                                Uso = usoEnum,
                                 Tipo = new InmuebleTipo
                                 {
                                     Tipo = reader.GetString("TipoInmueble"),
@@ -60,14 +60,43 @@ namespace Inmobiliaria_.Net.Repositorios
                                     Nombre = reader.GetString("NombrePropietario"),
                                     Apellido = reader.GetString("ApellidoPropietario"),
                                 }
-                            });                            
+                            });
                         }
                         connection.Close();
-                    }  
+                    }
+                }
+            }
+            return inmuebles;
+        }
+
+        // [Listar Tipos Inmueble]
+       public IList<InmuebleTipo> ListarTiposInmueble()
+{
+    var listado = new List<InmuebleTipo>();
+    using (var connection = new MySqlConnection(ConnectionString))
+    {
+        var sql = "SELECT * FROM tipo_inmueble;";
+        using (var command = new MySqlCommand(sql, connection))
+        {
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    listado.Add(new InmuebleTipo
+                    {
+                        Id = reader.GetInt32("Id_Tipo"),
+                        Tipo = reader.GetString("Tipo")
+                    });
+                }
+            }
         }
     }
-    return inmuebles;
+    return listado;
 }
+
+
+
 
         // [Guardar]
         /*public int GuardarNuevo(Inquilino inquilino)

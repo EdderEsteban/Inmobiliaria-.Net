@@ -5,7 +5,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Listado de Inmuebles</h1>
-
+    <a asp-area="" asp-controller="Inmueble" asp-action="CrearInmueble">Crear</a>
     <table class="table table-sm table-striped table-hover">
         <tr>
             <th>Direccion</th>
@@ -25,9 +25,9 @@
                 <td>@(inmueble?.Cantidad_Ambientes)</td>
                 <td>@(inmueble?.Precio_Alquiler)</td>
                 <td>
-                    <a href="https://www.google.com/maps/search/?api=1&query=@inmueble.Latitud,@inmueble.Longitud"
+                    <a href="https://www.google.com/maps/search/?api=1&query=@inmueble?.Latitud,@inmueble?.Longitud"
                         target="_blank">
-                        @($"{inmueble.Latitud}, {inmueble.Longitud}")
+                        @($"{inmueble?.Latitud}, {inmueble?.Longitud}")
                     </a>
                 </td>
 

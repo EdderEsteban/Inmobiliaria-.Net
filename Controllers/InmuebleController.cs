@@ -21,12 +21,14 @@ public class InmuebleController : Controller
         return View(lista);
     }
 
-    /*public IActionResult CrearInquilino()
+        public IActionResult CrearInmueble()
     {
-        return View();
+        RepositorioInmueble repo = new RepositorioInmueble();
+        var listado = repo.ListarTiposInmueble();
+        return View(listado);
     }
 
-    public IActionResult GuardarInquilino(Inquilino inquilino)
+    /*public IActionResult GuardarInquilino(Inquilino inquilino)
     {
         if (ModelState.IsValid)//Asegurarse q es valido el modelo
         {
