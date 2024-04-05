@@ -31,11 +31,11 @@
                     </a>
                 </td>
 
-                <td>@($"{inmueble.Propietario?.Nombre} {inmueble.Propietario?.Apellido}" ?? "")</td>
+                <td>@($"{inmueble?.Propietario?.Nombre} {inmueble?.Propietario?.Apellido}" ?? "")</td>
                 <td><a asp-area="" asp-controller="Inmueble" asp-action="EditarInmueble"
-                        asp-route-Id="@inmueble.Id_inmueble">Editar</a> |
+                        asp-route-Id="@inmueble?.Id_inmueble">Editar</a> |
                     <a asp-area="" asp-controller="Inmueble" asp-action="EliminarInmueble"
-                        asp-route-Id="@inmueble.Id_inmueble">Borrar</a>
+                        asp-route-Id="@inmueble?.Id_inmueble">Borrar</a>
                 </td>
             </tr>
         }

@@ -23,23 +23,31 @@ public class InmuebleController : Controller
 
         public IActionResult CrearInmueble()
     {
+        //Enviar la lista de tipos de inmueble
         RepositorioInmueble repo = new RepositorioInmueble();
-        var listado = repo.ListarTiposInmueble();
-        return View(listado);
+        var listTipos = repo.ListarTiposInmueble();
+        ViewBag.tipos = listTipos;
+
+        //Enviar la lista de propietarios
+        RepositorioPropietario repoProp = new RepositorioPropietario();
+        var listPropietarios = repoProp.ListarPropietarios();
+        ViewBag.propietarios = listPropietarios;
+
+        return View();
     }
 
-    /*public IActionResult GuardarInquilino(Inquilino inquilino)
+    public IActionResult GuardarInmueble(Inmueble inmueble)
     {
         if (ModelState.IsValid)//Asegurarse q es valido el modelo
         {
-            RepositorioInquilino repo = new RepositorioInquilino();
-            repo.GuardarNuevo(inquilino);
-            return RedirectToAction(nameof(ListadoInquilinos));
+            RepositorioInmueble repo = new RepositorioInmueble();
+            repo.GuardarNuevo(inmueble);
+            return RedirectToAction(nameof(ListadoInmuebles));
         }
-        return View("CrearInquilino", inquilino);
+        return View("CrearInmueble", inmueble);
     }
 
-    public IActionResult EditarInquilino(int id)
+    /*public IActionResult EditarInquilino(int id)
     {
         if (id > 0)
         {

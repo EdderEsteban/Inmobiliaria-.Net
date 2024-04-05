@@ -18,6 +18,7 @@
                 <div class="form-group">
                     <label asp-for="Uso" class="control-label">Uso</label>
                     <select asp-for="Uso" class="form-control">
+                        <option default value="Comercial">Seleccione Uso</option>
                         <option value="Comercial">Comercial</option>
                         <option value="Residencial">Residencial</option>
                     </select>
@@ -27,7 +28,7 @@
                     <label asp-for="Tipo" class="control-label">Tipo</label>
                     <select asp-for="Tipo" class="form-control">
                         <option value="">Seleccionar Tipo</option>
-                        @foreach (var tipo in Model)
+                        @foreach (var tipo in ViewBag.tipos)
                         {
                             <option value="@tipo.Id">@tipo.Tipo</option>
                         }
@@ -57,14 +58,17 @@
                 <div class="form-group">
                     <label asp-for="Propietario" class="control-label">Propietario</label>
                     <select asp-for="Propietario" class="form-control">
-                        <option value="Comercial">Propietario1</option>
-                        <option value="Residencial">Propietario2</option>
+                        <option value="">Seleccionar Propietario</option>
+                        @foreach (var propietario in ViewBag.propietarios)
+                        {
+                            <option value="@propietario.Id_Propietario">@propietario.Nombre</option>
+                        }
                     </select>
                     <span asp-validation-for="Propietario" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-2">
                     <input type="submit" value="Guardar" class="btn btn-success" />
-                    <a asp-action="ListadoInquilinos" class="btn btn-primary">Volver</a>
+                    <a asp-action="ListadoInmuebles" class="btn btn-primary">Volver</a>
                 </div>
             </form>
         </div>

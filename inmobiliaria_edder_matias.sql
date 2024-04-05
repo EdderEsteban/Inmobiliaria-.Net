@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-04-2024 a las 08:00:20
+-- Tiempo de generación: 05-04-2024 a las 04:55:31
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -46,16 +46,23 @@ CREATE TABLE `contrato` (
 CREATE TABLE `inmueble` (
   `id_inmueble` int(11) NOT NULL,
   `direccion` varchar(255) DEFAULT NULL,
-  `uso` enum('comercial','residencial') DEFAULT NULL,
+  `uso` enum('Comercial','Residencial') DEFAULT NULL,
   `id_tipo` int(11) DEFAULT NULL,
   `cantidad_ambientes` int(11) DEFAULT NULL,
   `precio_alquiler` decimal(10,2) DEFAULT NULL,
-  `latitud` varchar(255) DEFAULT NULL,
-  `longitud` varchar(255) DEFAULT NULL,
+  `latitud` varchar(20) DEFAULT NULL,
+  `longitud` varchar(20) DEFAULT NULL,
   `id_propietario` int(11) DEFAULT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inmueble`
+--
+
+INSERT INTO `inmueble` (`id_inmueble`, `direccion`, `uso`, `id_tipo`, `cantidad_ambientes`, `precio_alquiler`, `latitud`, `longitud`, `id_propietario`, `id_usuario`, `fecha`) VALUES
+(1, 'Pringles 330 Dpto 3', 'Residencial', 2, 3, 230.00, '-33.30107764626808', '-66.32826228920763', 1, NULL, '2024-04-03 23:16:50');
 
 -- --------------------------------------------------------
 
@@ -136,6 +143,17 @@ CREATE TABLE `tipo_inmueble` (
   `id_tipo` int(11) NOT NULL,
   `tipo` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tipo_inmueble`
+--
+
+INSERT INTO `tipo_inmueble` (`id_tipo`, `tipo`) VALUES
+(1, 'Casa'),
+(2, 'Departamento'),
+(3, 'Galpón'),
+(4, 'Cochera'),
+(5, 'Terreno');
 
 -- --------------------------------------------------------
 
@@ -223,7 +241,7 @@ ALTER TABLE `contrato`
 -- AUTO_INCREMENT de la tabla `inmueble`
 --
 ALTER TABLE `inmueble`
-  MODIFY `id_inmueble` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `inquilino`
@@ -247,7 +265,7 @@ ALTER TABLE `propietario`
 -- AUTO_INCREMENT de la tabla `tipo_inmueble`
 --
 ALTER TABLE `tipo_inmueble`
-  MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

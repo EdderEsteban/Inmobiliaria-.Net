@@ -95,35 +95,37 @@ namespace Inmobiliaria_.Net.Repositorios
     return listado;
 }
 
-
-
-
-        // [Guardar]
-        /*public int GuardarNuevo(Inquilino inquilino)
+ // [Guardar]
+        public int GuardarNuevo(Inmueble inmueble)
         {
             int Id = 0;
             using (var connection = new MySqlConnection(ConnectionString))
             {
-                var sql = @$"INSERT INTO inquilino ({nameof(Inquilino.Nombre)}, {nameof(Inquilino.Apellido)}, 
-                {nameof(Inquilino.Dni)}, {nameof(Inquilino.Direccion)}, {nameof(Inquilino.Telefono)}, {nameof(Inquilino.Correo)})
-                VALUES (@{nameof(Inquilino.Nombre)}, @{nameof(Inquilino.Apellido)}, @{nameof(Inquilino.Dni)},
-                @{nameof(Inquilino.Direccion)}, @{nameof(Inquilino.Telefono)}, @{nameof(Inquilino.Correo)});
+                var sql = @$"INSERT INTO inmueble ({nameof(Inmueble.Direccion)}, {nameof(Inmueble.Uso)}, 
+                {nameof(Inmueble.Id_tipo)}, {nameof(Inmueble.Cantidad_Ambientes)}, {nameof(Inmueble.Precio_Alquiler)}, 
+                {nameof(Inmueble.Latitud)}, {nameof(Inmueble.Longitud)}, {nameof(Inmueble.Id_propietario)})
+                VALUES (@{nameof(Inmueble.Direccion)}, @{nameof(Inmueble.Uso)}, @{nameof(Inmueble.Id_tipo)},
+                 @{nameof(Inmueble.Cantidad_Ambientes)}, @{nameof(Inmueble.Precio_Alquiler)},
+                @{nameof(Inmueble.Latitud)}, @{nameof(Inmueble.Longitud)}, @{nameof(Inmueble.Id_propietario)});
                 SELECT LAST_INSERT_ID();";
 
 
                 using (var comand = new MySqlCommand(sql, connection))
                 {
-                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Nombre)}", inquilino.Nombre);
-                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Apellido)}", inquilino.Apellido);
-                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Dni)}", inquilino.Dni);
-                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Direccion)}", inquilino.Direccion);
-                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Telefono)}", inquilino.Telefono);
-                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Correo)}", inquilino.Correo);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Direccion)}", inmueble.Direccion);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Uso)}", inmueble.Uso);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Id_tipo)}", inmueble.Id_tipo);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Direccion)}", inmueble.Direccion);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Cantidad_Ambientes)}", inmueble.Cantidad_Ambientes);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Precio_Alquiler);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Latitud);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Longitud);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Id_propietario);
                   
                     connection.Open();
 
                     Id = Convert.ToInt32(comand.ExecuteScalar());
-                    inquilino.Id_inquilino = Id;
+                    inmueble.Id_inmueble = Id;
                     connection.Close();
                 }
             }
@@ -131,7 +133,7 @@ namespace Inmobiliaria_.Net.Repositorios
         }
 
         // [Obtener Inquilino]
-        public Inquilino? ObtenerInquilino(int id) 
+        /*public Inquilino? ObtenerInquilino(int id) 
         {
             Inquilino? inquilino = null;
             using (var connection = new MySqlConnection(ConnectionString))
