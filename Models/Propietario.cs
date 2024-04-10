@@ -36,5 +36,9 @@ public class Propietario
 
     public DateTime Fecha { get; set; } = DateTime.Now;
 
+    public Propietario() 
+    { 
+
+    }
     
 }

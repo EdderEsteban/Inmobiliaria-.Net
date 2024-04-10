@@ -38,13 +38,24 @@ public class InmuebleController : Controller
 
     public IActionResult GuardarInmueble(Inmueble inmueble)
     {
-        if (ModelState.IsValid)//Asegurarse q es valido el modelo
+        foreach (var prop in typeof(Inmueble).GetProperties())
         {
+            var propName = prop.Name;
+            var propValue = prop.GetValue(inmueble);
+
+            Console.WriteLine($"{propName}: {propValue}");
+        }
+        
+        //if (ModelState.IsValid)//Asegurarse q es valido el modelo
+        //{
+            Console.WriteLine("Modelo Validado");
             RepositorioInmueble repo = new RepositorioInmueble();
             repo.GuardarNuevo(inmueble);
             return RedirectToAction(nameof(ListadoInmuebles));
-        }
-        return View("CrearInmueble", inmueble);
+            //return View();
+        //}
+        //return RedirectToAction(nameof(ListadoInmuebles));
+        //return View();
     }
 
     /*public IActionResult EditarInquilino(int id)

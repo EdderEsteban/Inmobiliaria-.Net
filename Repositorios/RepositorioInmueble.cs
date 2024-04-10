@@ -70,34 +70,36 @@ namespace Inmobiliaria_.Net.Repositorios
         }
 
         // [Listar Tipos Inmueble]
-       public IList<InmuebleTipo> ListarTiposInmueble()
-{
-    var listado = new List<InmuebleTipo>();
-    using (var connection = new MySqlConnection(ConnectionString))
-    {
-        var sql = "SELECT * FROM tipo_inmueble;";
-        using (var command = new MySqlCommand(sql, connection))
+        public IList<InmuebleTipo> ListarTiposInmueble()
         {
-            connection.Open();
-            using (var reader = command.ExecuteReader())
+            var listado = new List<InmuebleTipo>();
+            using (var connection = new MySqlConnection(ConnectionString))
             {
-                while (reader.Read())
+                var sql = "SELECT * FROM tipo_inmueble;";
+                using (var command = new MySqlCommand(sql, connection))
                 {
-                    listado.Add(new InmuebleTipo
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
                     {
-                        Id = reader.GetInt32("Id_Tipo"),
-                        Tipo = reader.GetString("Tipo")
-                    });
+                        while (reader.Read())
+                        {
+                            listado.Add(new InmuebleTipo
+                            {
+                                Id_tipo = reader.GetInt32("Id_Tipo"),
+                                Tipo = reader.GetString("Tipo")
+                            });
+                        }
+                    }
+                    connection.Close();
                 }
             }
+            return listado;
         }
-    }
-    return listado;
-}
 
- // [Guardar]
+        // [Guardar]
         public int GuardarNuevo(Inmueble inmueble)
         {
+
             int Id = 0;
             using (var connection = new MySqlConnection(ConnectionString))
             {
@@ -115,13 +117,12 @@ namespace Inmobiliaria_.Net.Repositorios
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Direccion)}", inmueble.Direccion);
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Uso)}", inmueble.Uso);
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Id_tipo)}", inmueble.Id_tipo);
-                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Direccion)}", inmueble.Direccion);
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Cantidad_Ambientes)}", inmueble.Cantidad_Ambientes);
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Precio_Alquiler);
-                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Latitud);
-                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Longitud);
-                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Id_propietario);
-                  
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Latitud)}", inmueble.Latitud);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Longitud)}", inmueble.Longitud);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Id_propietario)}", inmueble.Id_propietario);
+
                     connection.Open();
 
                     Id = Convert.ToInt32(comand.ExecuteScalar());

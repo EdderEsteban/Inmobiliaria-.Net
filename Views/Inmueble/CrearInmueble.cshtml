@@ -1,7 +1,10 @@
 @model Inmueble
 
+
 @{
     ViewData["Title"] = "Inmueble";
+    var listaTipos = (IList<InmuebleTipo>)ViewBag.tipos;
+    var listaPropietarios = (IList<Propietario>)ViewBag.propietarios;
 }
 
 <h2>Crear Inmueble</h2>
@@ -25,16 +28,17 @@
                     <span asp-validation-for="Uso" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Tipo" class="control-label">Tipo</label>
-                    <select asp-for="Tipo" class="form-control">
+                    <label asp-for="Id_tipo" class="control-label">Tipo</label>
+                    <select name="Id_tipo" class="form-control">
                         <option value="">Seleccionar Tipo</option>
-                        @foreach (var tipo in ViewBag.tipos)
+                        @foreach (var tipo in listaTipos)
                         {
-                            <option value="@tipo.Id">@tipo.Tipo</option>
+                            @:<option value="@tipo.Id_tipo">@tipo.Tipo</option>
                         }
                     </select>
-                    <span asp-validation-for="Tipo" class="text-danger"></span>
+                    <span asp-validation-for="Id_tipo" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="Cantidad_Ambientes" class="control-label">Cantidad de Ambientes</label>
                     <input asp-for="Cantidad_Ambientes" class="form-control" type="number" />
@@ -56,15 +60,15 @@
                     <span asp-validation-for="Longitud" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Propietario" class="control-label">Propietario</label>
-                    <select asp-for="Propietario" class="form-control">
-                        <option value="">Seleccionar Propietario</option>
-                        @foreach (var propietario in ViewBag.propietarios)
+                    <label asp-for="Id_propietario" class="control-label">Propietario</label>
+                    <select name="Id_propietario" class="form-control">
+                        <option value="">Seleccionar Propietario</option> 
+                        @foreach (var propietario in listaPropietarios)
                         {
-                            <option value="@propietario.Id_Propietario">@propietario.Nombre</option>
+                            @:<option value="@propietario.Id_Propietario">@propietario.Nombre</option>
                         }
                     </select>
-                    <span asp-validation-for="Propietario" class="text-danger"></span>
+                    <span asp-validation-for="Id_propietario" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-2">
                     <input type="submit" value="Guardar" class="btn btn-success" />

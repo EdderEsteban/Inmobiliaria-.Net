@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-04-2024 a las 04:55:31
+-- Tiempo de generación: 10-04-2024 a las 05:46:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -11,7 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
+ 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -62,7 +62,8 @@ CREATE TABLE `inmueble` (
 --
 
 INSERT INTO `inmueble` (`id_inmueble`, `direccion`, `uso`, `id_tipo`, `cantidad_ambientes`, `precio_alquiler`, `latitud`, `longitud`, `id_propietario`, `id_usuario`, `fecha`) VALUES
-(1, 'Pringles 330 Dpto 3', 'Residencial', 2, 3, 230.00, '-33.30107764626808', '-66.32826228920763', 1, NULL, '2024-04-03 23:16:50');
+(1, 'Pringles 330 Dpto 3', 'Residencial', 2, 3, 230.00, '-33.30107764626808', '-66.32826228920763', 1, NULL, '2024-04-03 23:16:50'),
+(2, 'Maipu 670', 'Comercial', 6, 3, 63000.00, '-33.30228322937067', '-66.33193927790455', 3, NULL, '2024-04-10 00:43:56');
 
 -- --------------------------------------------------------
 
@@ -131,7 +132,8 @@ CREATE TABLE `propietario` (
 --
 
 INSERT INTO `propietario` (`id_propietario`, `nombre`, `apellido`, `dni`, `direccion`, `telefono`, `correo`, `id_usuario`, `fecha`) VALUES
-(1, 'Matias', 'Diaz', 12345678, 'Merlo', '2665122345', 'maty@diaz.com', NULL, '2024-04-02 00:02:25');
+(1, 'Matias', 'Diaz', 12345678, 'Merlo', '2665122345', 'maty@diaz.com', NULL, '2024-04-02 00:02:25'),
+(3, 'Simon', 'Ortega', 65498732, 'Salta', '2664857985', 'simon@ortega.com', NULL, '2024-04-09 22:50:48');
 
 -- --------------------------------------------------------
 
@@ -153,7 +155,8 @@ INSERT INTO `tipo_inmueble` (`id_tipo`, `tipo`) VALUES
 (2, 'Departamento'),
 (3, 'Galpón'),
 (4, 'Cochera'),
-(5, 'Terreno');
+(5, 'Terreno'),
+(6, 'Local');
 
 -- --------------------------------------------------------
 
@@ -241,7 +244,7 @@ ALTER TABLE `contrato`
 -- AUTO_INCREMENT de la tabla `inmueble`
 --
 ALTER TABLE `inmueble`
-  MODIFY `id_inmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_inmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `inquilino`
@@ -259,13 +262,13 @@ ALTER TABLE `pago`
 -- AUTO_INCREMENT de la tabla `propietario`
 --
 ALTER TABLE `propietario`
-  MODIFY `id_propietario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_propietario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_inmueble`
 --
 ALTER TABLE `tipo_inmueble`
-  MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
