@@ -17,10 +17,11 @@ public class InmuebleController : Controller
     public IActionResult ListadoInmuebles()
     {
         RepositorioInmueble repo = new RepositorioInmueble();
-        var lista = repo.ListarInmuebles();
+        var lista = repo.ListarTodosInmuebles();
         return View(lista);
     }
 
+    [HttpGet]
         public IActionResult CrearInmueble()
     {
         //Enviar la lista de tipos de inmueble
@@ -36,6 +37,7 @@ public class InmuebleController : Controller
         return View();
     }
 
+    [HttpPost]
     public IActionResult GuardarInmueble(Inmueble inmueble)
     {
         foreach (var prop in typeof(Inmueble).GetProperties())
@@ -46,16 +48,16 @@ public class InmuebleController : Controller
             Console.WriteLine($"{propName}: {propValue}");
         }
         
-        //if (ModelState.IsValid)//Asegurarse q es valido el modelo
-        //{
+        if (ModelState.IsValid)//Asegurarse q es valido el modelo
+        {
             Console.WriteLine("Modelo Validado");
             RepositorioInmueble repo = new RepositorioInmueble();
             repo.GuardarNuevo(inmueble);
             return RedirectToAction(nameof(ListadoInmuebles));
-            //return View();
-        //}
-        //return RedirectToAction(nameof(ListadoInmuebles));
-        //return View();
+            
+        }
+        return View();
+        
     }
 
     /*public IActionResult EditarInquilino(int id)

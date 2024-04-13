@@ -5,8 +5,15 @@
 
 <div class="text-center">
     <h1 class="display-4">Listado de Inquilinos</h1>
-    <a asp-area="" asp-controller="Inquilino" asp-action="CrearInquilino">Crear</a>
-    <table class="table table-sm table-striped table-hover">
+    <div class="text-start mb-3">
+        <a class="material-symbols-outlined" asp-controller="Inquilino" asp-action="CrearInquilino"
+        title="Agregar Inquilino">person_add</a>
+        <div class="mb-3">
+            <strong><label for="txtBusqueda" class="form-label" >Buscar:</label></strong>            
+            <input type="text" id="txtBusqueda" class="form-control-sm" placeholder="Buscar Inquilino...">
+        </div>
+    </div>
+    <table id="tblInquilino" class="table table-sm table-striped table-hover">
         <tr>
             <th>Nombre</th>
             <th>Apellido</th>
@@ -32,3 +39,22 @@
     </table>
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const inputBusqueda = document.getElementById("txtBusqueda");
+        const tablaInmuebles = document.getElementById("tblInquilino");
+
+        inputBusqueda.addEventListener("input", function () {
+            const filtro = inputBusqueda.value.toLowerCase();
+            const filas = tablaInmuebles.querySelectorAll("tr");
+
+            filas.forEach(function (fila, index) {
+                if (index === 0) return;
+                const contenidoFila = fila.textContent.trim().toLowerCase();
+                const mostrarFila = contenidoFila.includes(filtro);
+                fila.style.display = mostrarFila ? "" : "none";
+            });
+        });
+    });
+</script>

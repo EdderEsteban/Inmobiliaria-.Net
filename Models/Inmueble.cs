@@ -26,16 +26,22 @@ namespace Inmobiliaria_.Net.Models
         public decimal Precio_Alquiler { get; set; }
 
         [Required(ErrorMessage = "El campo Latitud es obligatorio.")]
-        [RegularExpression("^[0-9.]*$", ErrorMessage = "El campo Latitud solo debe contener números y el caracter '.'.")]
+        [RegularExpression("^[0-9.-]*$", ErrorMessage = "El campo Latitud solo debe contener números y el caracter '.'.")]
         public string? Latitud { get; set; } 
 
         [Required(ErrorMessage = "El campo Longitud es obligatorio.")]
-        [RegularExpression("^[0-9.]*$", ErrorMessage = "El campo Latitud solo debe contener números y el caracter '.'.")]
+        [RegularExpression("^[0-9.-]*$", ErrorMessage = "El campo Latitud solo debe contener números y el caracter '.'.")]
         public string? Longitud { get; set; }
+
+        
+        public Boolean Activo { get; set; }
+
+        public Boolean Disponible { get; set; }
 
         public int Id_propietario { get; set; }
 
         public Propietario? Propietario { get; set; }
+
 
         public int Id_usuario { get; set; }
 

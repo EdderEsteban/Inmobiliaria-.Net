@@ -7,6 +7,7 @@
     var listaPropietarios = (IList<Propietario>)ViewBag.propietarios;
 }
 
+
 <h2>Crear Inmueble</h2>
 
 <div class="container">
@@ -29,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Id_tipo" class="control-label">Tipo</label>
-                    <select name="Id_tipo" class="form-control">
+                    <select name="Id_tipo" class="form-control" id="listTipo">
                         <option value="">Seleccionar Tipo</option>
                         @foreach (var tipo in listaTipos)
                         {
@@ -61,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Id_propietario" class="control-label">Propietario</label>
-                    <select name="Id_propietario" class="form-control">
+                    <select name="Id_propietario" class="form-control" id="listPropietario">
                         <option value="">Seleccionar Propietario</option> 
                         @foreach (var propietario in listaPropietarios)
                         {
@@ -78,3 +79,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+    $('#listPropietario').select2();
+});
+$(document).ready(function() {
+    $('#listTipo').select2();
+});
+</script>
