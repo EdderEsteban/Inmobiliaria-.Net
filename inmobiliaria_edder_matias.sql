@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-04-2024 a las 05:46:53
+-- Tiempo de generación: 13-04-2024 a las 05:15:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -11,7 +11,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
- 
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -52,6 +52,8 @@ CREATE TABLE `inmueble` (
   `precio_alquiler` decimal(10,2) DEFAULT NULL,
   `latitud` varchar(20) DEFAULT NULL,
   `longitud` varchar(20) DEFAULT NULL,
+  `activo` tinyint(4) NOT NULL,
+  `disponible` tinyint(4) NOT NULL,
   `id_propietario` int(11) DEFAULT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp()
@@ -61,9 +63,13 @@ CREATE TABLE `inmueble` (
 -- Volcado de datos para la tabla `inmueble`
 --
 
-INSERT INTO `inmueble` (`id_inmueble`, `direccion`, `uso`, `id_tipo`, `cantidad_ambientes`, `precio_alquiler`, `latitud`, `longitud`, `id_propietario`, `id_usuario`, `fecha`) VALUES
-(1, 'Pringles 330 Dpto 3', 'Residencial', 2, 3, 230.00, '-33.30107764626808', '-66.32826228920763', 1, NULL, '2024-04-03 23:16:50'),
-(2, 'Maipu 670', 'Comercial', 6, 3, 63000.00, '-33.30228322937067', '-66.33193927790455', 3, NULL, '2024-04-10 00:43:56');
+INSERT INTO `inmueble` (`id_inmueble`, `direccion`, `uso`, `id_tipo`, `cantidad_ambientes`, `precio_alquiler`, `latitud`, `longitud`, `activo`, `disponible`, `id_propietario`, `id_usuario`, `fecha`) VALUES
+(1, 'Pringles 330 Dpto 3', 'Residencial', 2, 3, 230.00, '-33.30107764626808', '-66.32826228920763', 1, 1, 1, NULL, '2024-04-03 23:16:50'),
+(2, 'Maipu 670', 'Comercial', 6, 3, 63000.00, '-33.30228322937067', '-66.33193927790455', 1, 0, 3, NULL, '2024-04-10 00:43:56'),
+(3, 'Concaran', 'Residencial', 3, 1, 56000.00, '-33.302314597600216', '-66.33191967583032', 0, 0, 3, NULL, '2024-04-12 16:58:33'),
+(4, 'San Luis', 'Residencial', 1, 2, 68000.00, '-33.30228322937067', '-66.33193927790455', 0, 0, 3, NULL, '2024-04-12 17:22:30'),
+(5, 'Merlo', 'Comercial', 6, 3, 68000.00, '-33.30228322937067', '-66.33193927790455', 0, 0, 1, NULL, '2024-04-12 22:25:52'),
+(6, 'Berrondo 338', 'Residencial', 1, 3, 420000.00, '-33.292588547888805', '-66.31959623517908', 0, 0, 1, NULL, '2024-04-12 22:28:54');
 
 -- --------------------------------------------------------
 
@@ -133,7 +139,8 @@ CREATE TABLE `propietario` (
 
 INSERT INTO `propietario` (`id_propietario`, `nombre`, `apellido`, `dni`, `direccion`, `telefono`, `correo`, `id_usuario`, `fecha`) VALUES
 (1, 'Matias', 'Diaz', 12345678, 'Merlo', '2665122345', 'maty@diaz.com', NULL, '2024-04-02 00:02:25'),
-(3, 'Simon', 'Ortega', 65498732, 'Salta', '2664857985', 'simon@ortega.com', NULL, '2024-04-09 22:50:48');
+(3, 'Simon', 'Ortega', 65498732, 'Salta', '2664857985', 'simon@ortega.com', NULL, '2024-04-09 22:50:48'),
+(4, 'Edder', 'Santibañez', 93962239, 'Min Berrondo 338', '2664271316', 'edder@santi.com', NULL, '2024-04-12 23:54:42');
 
 -- --------------------------------------------------------
 
@@ -244,7 +251,7 @@ ALTER TABLE `contrato`
 -- AUTO_INCREMENT de la tabla `inmueble`
 --
 ALTER TABLE `inmueble`
-  MODIFY `id_inmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_inmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `inquilino`
@@ -262,7 +269,7 @@ ALTER TABLE `pago`
 -- AUTO_INCREMENT de la tabla `propietario`
 --
 ALTER TABLE `propietario`
-  MODIFY `id_propietario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_propietario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_inmueble`
