@@ -14,15 +14,22 @@ public class InmuebleController : Controller
         _logger = logger;
     }
 
-    public IActionResult ListadoInmuebles()
+    public IActionResult ListadoTodosInmuebles()
     {
         RepositorioInmueble repo = new RepositorioInmueble();
         var lista = repo.ListarTodosInmuebles();
         return View(lista);
     }
 
+    public IActionResult ListadoInmuebles()
+    {
+        RepositorioInmueble repo = new RepositorioInmueble();
+        var lista = repo.ListarInmueblesActivos();
+        return View(lista);
+    }
+
     [HttpGet]
-        public IActionResult CrearInmueble()
+    public IActionResult CrearInmueble()
     {
         //Enviar la lista de tipos de inmueble
         RepositorioInmueble repo = new RepositorioInmueble();
@@ -40,24 +47,16 @@ public class InmuebleController : Controller
     [HttpPost]
     public IActionResult GuardarInmueble(Inmueble inmueble)
     {
-        foreach (var prop in typeof(Inmueble).GetProperties())
-        {
-            var propName = prop.Name;
-            var propValue = prop.GetValue(inmueble);
-
-            Console.WriteLine($"{propName}: {propValue}");
-        }
-        
         if (ModelState.IsValid)//Asegurarse q es valido el modelo
         {
             Console.WriteLine("Modelo Validado");
             RepositorioInmueble repo = new RepositorioInmueble();
             repo.GuardarNuevo(inmueble);
-            return RedirectToAction(nameof(ListadoInmuebles));
-            
+            return RedirectToAction(nameof(ListadoTodosInmuebles));
+
         }
         return View();
-        
+
     }
 
     /*public IActionResult EditarInquilino(int id)
@@ -83,12 +82,19 @@ public class InmuebleController : Controller
             return RedirectToAction(nameof(ListadoInquilinos));
         }
         return View("EditarInquilino",inquilino);
-    }
- 
+    }*/
+
     public IActionResult EliminarInquilino(int id)
     {
-            RepositorioInquilino repo = new RepositorioInquilino();
-            repo.EliminarInquilino(id);
-            return RedirectToAction(nameof(ListadoInquilinos));
-    }*/
+        RepositorioInmueble repo = new RepositorioInmueble();
+        repo.EliminarInmueble(id);
+        return RedirectToAction(nameof(ListadoTodosInmuebles)); //Cambiar
+    }
+
+    public IActionResult Delete(int id, bool estado)
+    {
+        RepositorioInmueble repo = new RepositorioInmueble();
+        repo.CambiarEstadoInmueble(id);
+        return RedirectToAction(nameof(ListadoInmuebles)); //cambiar
+    }
 }

@@ -78,11 +78,12 @@ namespace Inmobiliaria_.Net.Repositorios
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 var sql = @" SELECT i.Id_inmueble, i.Direccion, i.Uso, i.Id_tipo, ti.Tipo AS TipoInmueble, i.Cantidad_Ambientes,
-                i.Precio_Alquiler, i.Latitud, i.Longitud, i.Id_propietario, p.Nombre AS NombrePropietario, p.Apellido AS ApellidoPropietario
+                i.Precio_Alquiler, i.Latitud, i.Longitud, i.activo, i.disponible, i.Id_propietario, p.Nombre AS NombrePropietario, p.Apellido AS ApellidoPropietario
             FROM 
                 inmueble i
                 INNER JOIN tipo_inmueble ti ON i.Id_tipo = ti.Id_tipo
-                INNER JOIN propietario p ON i.Id_propietario = p.Id_propietario";
+                INNER JOIN propietario p ON i.Id_propietario = p.Id_propietario
+            WHERE i.activo = 1";
 
                 using (var command = new MySqlCommand(sql, connection))
                 {
@@ -114,7 +115,9 @@ namespace Inmobiliaria_.Net.Repositorios
                                 {
                                     Nombre = reader.GetString("NombrePropietario"),
                                     Apellido = reader.GetString("ApellidoPropietario"),
-                                }
+                                },
+                                Activo = reader.GetBoolean(nameof(Inmueble.Activo)),
+                                Disponible = reader.GetBoolean(nameof(Inmueble.Disponible)),
                             });
                         }
                         connection.Close();
@@ -213,7 +216,8 @@ namespace Inmobiliaria_.Net.Repositorios
             {
                 var sql = @$"INSERT INTO inmueble ({nameof(Inmueble.Direccion)}, {nameof(Inmueble.Uso)}, 
                 {nameof(Inmueble.Id_tipo)}, {nameof(Inmueble.Cantidad_Ambientes)}, {nameof(Inmueble.Precio_Alquiler)}, 
-                {nameof(Inmueble.Latitud)}, {nameof(Inmueble.Longitud)}, {nameof(Inmueble.Id_propietario)})
+                {nameof(Inmueble.Latitud)}, {nameof(Inmueble.Longitud)}, {nameof(Inmueble.Activo)}, {nameof(Inmueble.Disponible)},
+                {nameof(Inmueble.Id_propietario)})
                 VALUES (@{nameof(Inmueble.Direccion)}, @{nameof(Inmueble.Uso)}, @{nameof(Inmueble.Id_tipo)},
                  @{nameof(Inmueble.Cantidad_Ambientes)}, @{nameof(Inmueble.Precio_Alquiler)},
                 @{nameof(Inmueble.Latitud)}, @{nameof(Inmueble.Longitud)}, @{nameof(Inmueble.Id_propietario)});
@@ -229,6 +233,8 @@ namespace Inmobiliaria_.Net.Repositorios
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Precio_Alquiler);
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Latitud)}", inmueble.Latitud);
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Longitud)}", inmueble.Longitud);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Activo)}", inmueble.Activo);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Disponible)}", inmueble.Disponible);
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Id_propietario)}", inmueble.Id_propietario);
 
                     connection.Open();
@@ -308,24 +314,44 @@ namespace Inmobiliaria_.Net.Repositorios
             connection.Close();
         }
     }
-}
+}*/
 
-        // [Eliminar Inquilino]
-        public int EliminarInquilino(int id)
+        // [Eliminar de BD Inmueble]
+        public int EliminarInmueble(int id)
         {
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 var sql = @$"DELETE FROM inquilino 
-                WHERE {nameof(Inquilino.Id_inquilino)} = @{nameof(Inquilino.Id_inquilino)}";
+                WHERE {nameof(Inmueble.Id_inmueble)} = @{nameof(Inmueble.Id_inmueble)}";
                 using (var command = new MySqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Id_inquilino)}", id);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_inmueble)}", id);
                     connection.Open();
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
             }
             return 0;
-        }*/
+        }
+
+        // [Eliminar de Tabla Inmueble]
+        public int CambiarEstadoInmueble(int id)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                var sql = @$"UPDATE inmueble 
+                SET activo = 0 
+                WHERE {nameof(Inmueble.Id_inmueble)} = @{nameof(Inmueble.Id_inmueble)}";
+                using (var command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_inmueble)}", id);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            return 0;
+        }
+
     }
 }

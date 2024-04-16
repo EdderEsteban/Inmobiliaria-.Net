@@ -21,69 +21,51 @@
             <th>Ambientes</th>
             <th>Precio</th>
             <th>Ubicacion</th>
-            <th>Activo</th>
             <th>Disponible</th>
             <th>Propietario</th>
+            <th>Acciones</th>
         </tr>
         @foreach (var inmueble in Model)
         {
-            <tr>
-                <td>@(inmueble.Direccion)</td>
-                <td>@(inmueble.Uso)</td>
-                <td>@(inmueble?.Tipo?.Tipo)</td>
-                <td>@(inmueble?.Cantidad_Ambientes)</td>
-                <td>@(inmueble?.Precio_Alquiler)</td>
-                <td>
-                    <a href="https://www.google.com/maps/search/?api=1&amp;query=@inmueble?.Latitud,@inmueble?.Longitud"
-                        target="_blank">
-                        <span class="material-symbols-outlined">
-                            home_pin
-                        </span>
-                    </a>
-                </td>
-                <td> @* Condicional switch para saber si esta activo o no *@
-                    @if (inmueble.Activo)
-                    {
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch"
-                                id="switchActivo-@(inmueble.Id_inmueble)" checked disabled>
-                            <label class="form-check-label" for="switchActivo-@(inmueble.Id_inmueble)"></label>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch"
-                                id="switchActivo-@(inmueble.Id_inmueble)" disabled>
-                            <label class="form-check-label" for="switchActivo-@(inmueble.Id_inmueble)"></label>
-                        </div>
-                    }
-                </td>
-                <td> @* Condicional switch para saber si esta activo o no *@
+                <tr>
+                    <td>@(inmueble.Direccion)</td>
+                    <td>@(inmueble.Uso)</td>
+                    <td>@(inmueble?.Tipo?.Tipo)</td>
+                    <td>@(inmueble?.Cantidad_Ambientes)</td>
+                    <td>@(inmueble?.Precio_Alquiler)</td>
+                    <td>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=@inmueble?.Latitud,@inmueble?.Longitud"
+                            target="_blank">
+                            <span class="material-symbols-outlined">
+                                home_pin
+                            </span>
+                        </a>
+                    </td>
+                    <td> @* Condicional switch para saber si esta activo o no *@
                     @if (inmueble.Disponible)
                     {
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch"
-                                id="switchDisponible-@(inmueble.Id_inmueble)" checked disabled>
-                            <label class="form-check-label" for="switchDisponible-@(inmueble.Id_inmueble)"></label>
-                        </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchDisponible-@(inmueble.Id_inmueble)" checked disabled>
+                                    <label class="form-check-label" for="switchDisponible-@(inmueble.Id_inmueble)"></label>
+                                </div>
                     }
                     else
                     {
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch"
-                                id="switchDisponible-@(inmueble.Id_inmueble)" disabled>
-                            <label class="form-check-label" for="switchDisponible-@(inmueble.Id_inmueble)"></label>
-                        </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch"
+                                        id="switchDisponible-@(inmueble.Id_inmueble)" disabled>
+                                    <label class="form-check-label" for="switchDisponible-@(inmueble.Id_inmueble)"></label>
+                                </div>
                     }
-                </td>
-                <td>@($"{inmueble?.Propietario?.Nombre} {inmueble?.Propietario?.Apellido}" ?? "")</td>
-                <td><a asp-area="" asp-controller="Inmueble" asp-action="EditarInmueble"
-                        asp-route-Id="@inmueble?.Id_inmueble">Editar</a> |
-                    <a asp-area="" asp-controller="Inmueble" asp-action="EliminarInmueble"
-                        asp-route-Id="@inmueble?.Id_inmueble">Borrar</a>
-                </td>
-            </tr>
+                    </td>
+                    <td>@($"{inmueble?.Propietario?.Nombre} {inmueble?.Propietario?.Apellido}" ?? "")</td>
+                    <td><a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="EditarInmueble"
+                            asp-route-Id="@inmueble?.Id_inmueble" title="Editar Inmueble">edit_note</a> 
+                        <a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="Delete"
+                            asp-route-Id="@inmueble?.Id_inmueble" title="Borrar Inmueble">delete</a>
+                    </td>
+                </tr>
         }
     </table>
 </div>

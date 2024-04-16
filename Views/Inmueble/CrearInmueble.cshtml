@@ -60,10 +60,33 @@
                     <input asp-for="Longitud" class="form-control" />
                     <span asp-validation-for="Longitud" class="text-danger"></span>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Activo" class="control-label">Activo</label>
+                            <div class="form-check form-switch">
+                                <input asp-for="Activo" class="form-check-input" type="checkbox" id="switchActivo" />
+                                <label class="form-check-label" for="switchActivo"></label>
+                            </div>
+                            <span asp-validation-for="Activo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Disponible" class="control-label">Disponible</label>
+                            <div class="form-check form-switch">
+                                <input asp-for="Disponible" class="form-check-input" type="checkbox"
+                                    id="switchDisponible" />
+                                <label class="form-check-label" for="switchDisponible"></label>
+                            </div>
+                            <span asp-validation-for="Disponible" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label asp-for="Id_propietario" class="control-label">Propietario</label>
                     <select name="Id_propietario" class="form-control" id="listPropietario">
-                        <option value="">Seleccionar Propietario</option> 
+                        <option value="">Seleccionar Propietario</option>
                         @foreach (var propietario in listaPropietarios)
                         {
                             @:<option value="@propietario.Id_Propietario">@propietario.Nombre</option>
@@ -81,10 +104,10 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-    $('#listPropietario').select2();
-});
-$(document).ready(function() {
-    $('#listTipo').select2();
-});
+    $(document).ready(function () {
+        $('#listPropietario').select2();
+    });
+    $(document).ready(function () {
+        $('#listTipo').select2();
+    });
 </script>
