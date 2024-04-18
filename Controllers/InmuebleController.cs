@@ -21,13 +21,19 @@ public class InmuebleController : Controller
         return View(lista);
     }
 
-    public IActionResult ListadoInmuebles()
+    public IActionResult ListadoInmueblesActivos()
     {
         RepositorioInmueble repo = new RepositorioInmueble();
         var lista = repo.ListarInmueblesActivos();
         return View(lista);
     }
 
+    public IActionResult ListadoInmueblesDisponibles()
+    {
+        RepositorioInmueble repo = new RepositorioInmueble();
+        var lista = repo.ListarInmueblesDisponibles();
+        return View(lista);
+    }
     [HttpGet]
     public IActionResult CrearInmueble()
     {
@@ -49,7 +55,6 @@ public class InmuebleController : Controller
     {
         if (ModelState.IsValid)//Asegurarse q es valido el modelo
         {
-            Console.WriteLine("Modelo Validado");
             RepositorioInmueble repo = new RepositorioInmueble();
             repo.GuardarNuevo(inmueble);
             return RedirectToAction(nameof(ListadoTodosInmuebles));
@@ -59,21 +64,24 @@ public class InmuebleController : Controller
 
     }
 
-    /*public IActionResult EditarInquilino(int id)
+    public IActionResult EditarInmueble(int id)
     {
-        if (id > 0)
-        {
-            RepositorioInquilino repo = new RepositorioInquilino();
-            var inquilino = repo.ObtenerInquilino(id);
-            return View(inquilino);
-        }
-        else
-        {
-            return View();
-        }
+        //Enviar la lista de tipos de inmueble
+        RepositorioInmueble repo = new RepositorioInmueble();
+        /*var listTipos = repo.ListarTiposInmueble();
+        ViewBag.tipos = listTipos;
+
+        //Enviar la lista de propietarios
+        RepositorioPropietario repoProp = new RepositorioPropietario();
+        var listPropietarios = repoProp.ListarPropietarios();
+        ViewBag.propietarios = listPropietarios;*/
+
+        var inmueble = repo.ObtenerInmueble(id);
+
+        return View(inmueble);
     }
 
-    public IActionResult ModificarInquilino(Inquilino inquilino)
+   /* public IActionResult ModificarInquilino(Inquilino inquilino)
     {
          if (ModelState.IsValid)//Asegurarse q es valido el modelo
         {
@@ -95,6 +103,6 @@ public class InmuebleController : Controller
     {
         RepositorioInmueble repo = new RepositorioInmueble();
         repo.CambiarEstadoInmueble(id);
-        return RedirectToAction(nameof(ListadoInmuebles)); //cambiar
+        return RedirectToAction(nameof(ListadoInmueblesActivos)); //cambiar
     }
 }

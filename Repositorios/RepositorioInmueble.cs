@@ -71,7 +71,7 @@ namespace Inmobiliaria_.Net.Repositorios
             return inmuebles;
         }
 
-        //[Listar Inmuebles]
+        //[Listar Inmuebles Activos]
         public IList<Inmueble> ListarInmueblesActivos()
         {
             var inmuebles = new List<Inmueble>();
@@ -127,18 +127,19 @@ namespace Inmobiliaria_.Net.Repositorios
             return inmuebles;
         }
 
-        //[Listar Inmuebles Inactivos]
-        public IList<Inmueble> ListarInmueblesInactivos()
+        //[Listar Inmuebles Disponibles]
+        public IList<Inmueble> ListarInmueblesDisponibles()
         {
             var inmuebles = new List<Inmueble>();
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 var sql = @" SELECT i.Id_inmueble, i.Direccion, i.Uso, i.Id_tipo, ti.Tipo AS TipoInmueble, i.Cantidad_Ambientes,
-                i.Precio_Alquiler, i.Latitud, i.Longitud, i.Id_propietario, p.Nombre AS NombrePropietario, p.Apellido AS ApellidoPropietario
+                i.Precio_Alquiler, i.Latitud, i.Longitud, i.activo, i.disponible, i.Id_propietario, p.Nombre AS NombrePropietario, p.Apellido AS ApellidoPropietario
             FROM 
                 inmueble i
                 INNER JOIN tipo_inmueble ti ON i.Id_tipo = ti.Id_tipo
-                INNER JOIN propietario p ON i.Id_propietario = p.Id_propietario";
+                INNER JOIN propietario p ON i.Id_propietario = p.Id_propietario
+            WHERE i.disponible = 1 AND i.disponible = 1";
 
                 using (var command = new MySqlCommand(sql, connection))
                 {
@@ -170,7 +171,9 @@ namespace Inmobiliaria_.Net.Repositorios
                                 {
                                     Nombre = reader.GetString("NombrePropietario"),
                                     Apellido = reader.GetString("ApellidoPropietario"),
-                                }
+                                },
+                                Activo = reader.GetBoolean(nameof(Inmueble.Activo)),
+                                Disponible = reader.GetBoolean(nameof(Inmueble.Disponible)),
                             });
                         }
                         connection.Close();
@@ -247,74 +250,94 @@ namespace Inmobiliaria_.Net.Repositorios
             return Id;
         }
 
-        // [Obtener Inquilino]
-        /*public Inquilino? ObtenerInquilino(int id) 
+        // [Obtener Inmueble]
+        public Inmueble? ObtenerInmueble(int id)
         {
-            Inquilino? inquilino = null;
+            Inmueble? inmueble = null;
             using (var connection = new MySqlConnection(ConnectionString))
             {
-                var sql = @$"Select {nameof(Inquilino.Id_inquilino)}, {nameof(Inquilino.Nombre)}, {nameof(Inquilino.Apellido)}, 
-                {nameof(Inquilino.Dni)}, {nameof(Inquilino.Direccion)}, {nameof(Inquilino.Telefono)},{nameof(Inquilino.Correo)} 
-                FROM inquilino
-                WHERE {nameof(Inquilino.Id_inquilino)} = @{nameof(Inquilino.Id_inquilino)}";
+                var sql = @" SELECT i.Id_inmueble, i.Direccion, i.Uso, i.Id_tipo, ti.Tipo AS TipoInmueble, i.Cantidad_Ambientes,
+                i.Precio_Alquiler, i.Latitud, i.Longitud, i.activo, i.disponible, i.Id_propietario, p.Nombre AS NombrePropietario, p.Apellido AS ApellidoPropietario
+            FROM 
+                inmueble i
+                INNER JOIN tipo_inmueble ti ON i.Id_tipo = ti.Id_tipo
+                INNER JOIN propietario p ON i.Id_propietario = p.Id_propietario
+            WHERE i.id_inmueble = @id";
 
-                using (var comand = new MySqlCommand(sql, connection))
+                using (var command = new MySqlCommand(sql, connection))
                 {
-                    comand.Parameters.AddWithValue($"@{nameof(Inquilino.Id_inquilino)}", id);
                     connection.Open();
-                    using (var reader = comand.ExecuteReader())
+                    using (var reader = command.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                            inquilino = new Inquilino
-                            {
-                                Id_inquilino = reader.GetInt32(nameof(Inquilino.Id_inquilino)),
-                                Nombre = reader.GetString(nameof(Inquilino.Nombre)),
-                                Apellido = reader.GetString(nameof(Inquilino.Apellido)),
-                                Dni = reader.GetInt32(nameof(Inquilino.Dni)),
-                                Direccion = reader.GetString(nameof(Inquilino.Direccion)),
-                                Telefono = reader.GetString(nameof(Inquilino.Telefono)),
-                                Correo = reader.GetString(nameof(Inquilino.Correo))
+                            //Manejo de los Enum en C#
+                            string uso = reader.GetString(nameof(Inmueble.Uso));
+                            UsoInmueble usoEnum;
+                            Enum.TryParse(uso, out usoEnum);
+                            //Fin Manejo de los Enum en C#
 
+                            inmueble = new Inmueble
+                            {
+                                Id_inmueble = reader.GetInt32(nameof(Inmueble.Id_inmueble)),
+                                Direccion = reader.GetString(nameof(Inmueble.Direccion)),
+                                Uso = usoEnum,
+                                Tipo = new InmuebleTipo
+                                {
+                                    Tipo = reader.GetString("TipoInmueble"),
+                                },
+                                Cantidad_Ambientes = reader.GetInt32(nameof(Inmueble.Cantidad_Ambientes)),
+                                Precio_Alquiler = reader.GetDecimal(nameof(Inmueble.Precio_Alquiler)),
+                                Latitud = reader.GetString(nameof(Inmueble.Latitud)),
+                                Longitud = reader.GetString(nameof(Inmueble.Longitud)),
+                                Propietario = new Propietario
+                                {
+                                    Nombre = reader.GetString("NombrePropietario"),
+                                    Apellido = reader.GetString("ApellidoPropietario"),
+                                },
+                                Activo = reader.GetBoolean(nameof(Inmueble.Activo)),
+                                Disponible = reader.GetBoolean(nameof(Inmueble.Disponible)),
                             };
                         }
                         connection.Close();
                     }
                 }
             }
-            return inquilino;
+            return inmueble;
         }
-        
+
+
+
         // [Actualizar Inquilino]
-        public void ActualizarInquilino(Inquilino inquilino)
-{
-    using (var connection = new MySqlConnection(ConnectionString))
-    {
-        var sql = @$"UPDATE inquilino SET
-                    {nameof(Inquilino.Nombre)} = @{nameof(Inquilino.Nombre)},
-                    {nameof(Inquilino.Apellido)} = @{nameof(Inquilino.Apellido)},
-                    {nameof(Inquilino.Dni)} = @{nameof(Inquilino.Dni)},
-                    {nameof(Inquilino.Direccion)} = @{nameof(Inquilino.Direccion)},
-                    {nameof(Inquilino.Telefono)} = @{nameof(Inquilino.Telefono)},
-                    {nameof(Inquilino.Correo)} = @{nameof(Inquilino.Correo)}
-                WHERE {nameof(Inquilino.Id_inquilino)} = @{nameof(Inquilino.Id_inquilino)}";
-
-        using (var command = new MySqlCommand(sql, connection))
+        /*        public void ActualizarInquilino(Inquilino inquilino)
         {
-            command.Parameters.AddWithValue($"@{nameof(Inquilino.Nombre)}", inquilino.Nombre);
-            command.Parameters.AddWithValue($"@{nameof(Inquilino.Apellido)}", inquilino.Apellido);
-            command.Parameters.AddWithValue($"@{nameof(Inquilino.Dni)}", inquilino.Dni);
-            command.Parameters.AddWithValue($"@{nameof(Inquilino.Direccion)}", inquilino.Direccion);
-            command.Parameters.AddWithValue($"@{nameof(Inquilino.Telefono)}", inquilino.Telefono);
-            command.Parameters.AddWithValue($"@{nameof(Inquilino.Correo)}", inquilino.Correo);
-            command.Parameters.AddWithValue($"@{nameof(Inquilino.Id_inquilino)}", inquilino.Id_inquilino);
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                var sql = @$"UPDATE inquilino SET
+                            {nameof(Inquilino.Nombre)} = @{nameof(Inquilino.Nombre)},
+                            {nameof(Inquilino.Apellido)} = @{nameof(Inquilino.Apellido)},
+                            {nameof(Inquilino.Dni)} = @{nameof(Inquilino.Dni)},
+                            {nameof(Inquilino.Direccion)} = @{nameof(Inquilino.Direccion)},
+                            {nameof(Inquilino.Telefono)} = @{nameof(Inquilino.Telefono)},
+                            {nameof(Inquilino.Correo)} = @{nameof(Inquilino.Correo)}
+                        WHERE {nameof(Inquilino.Id_inquilino)} = @{nameof(Inquilino.Id_inquilino)}";
 
-            connection.Open();
-            command.ExecuteNonQuery();
-            connection.Close();
-        }
-    }
-}*/
+                using (var command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Nombre)}", inquilino.Nombre);
+                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Apellido)}", inquilino.Apellido);
+                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Dni)}", inquilino.Dni);
+                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Direccion)}", inquilino.Direccion);
+                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Telefono)}", inquilino.Telefono);
+                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Correo)}", inquilino.Correo);
+                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Id_inquilino)}", inquilino.Id_inquilino);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+        }*/
 
         // [Eliminar de BD Inmueble]
         public int EliminarInmueble(int id)
