@@ -79,10 +79,11 @@
                     }
                 </td>
                 <td>@($"{inmueble?.Propietario?.Nombre} {inmueble?.Propietario?.Apellido}" ?? "")</td>
-                <td><a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="EditarInmueble"
+                <td name="Acciones">
+                    <a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="EditarInmueble"
                         asp-route-Id="@inmueble?.Id_inmueble" title="Editar Inmueble">edit_note</a> 
-                    <a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="Delete"
-                        asp-route-Id="@inmueble?.Id_inmueble" title="Borrar Inmueble">delete</a>
+                    <a class="material-symbols-outlined" href="#" onclick="confirmarEliminacion(@inmueble.Id_inmueble)" 
+                    title="Borrar Inmueble">delete</a>
                 </td>
             </tr>
         }
@@ -106,4 +107,11 @@
             });
         });
     });
+
+    function confirmarEliminacion(id) {
+        var confirmacion = confirm("Esta acción eliminará completamente este Inmueble. ¿Estás seguro?");
+        if (confirmacion) {
+            window.location.href = `@Url.Action("EliminarInmueble", "Inmueble")?id=${id}`;
+        }
+    }
 </script>

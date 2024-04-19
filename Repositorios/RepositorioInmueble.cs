@@ -262,10 +262,11 @@ namespace Inmobiliaria_.Net.Repositorios
                 inmueble i
                 INNER JOIN tipo_inmueble ti ON i.Id_tipo = ti.Id_tipo
                 INNER JOIN propietario p ON i.Id_propietario = p.Id_propietario
-            WHERE i.id_inmueble = @id";
+            WHERE i.id_inmueble = @id;";
 
                 using (var command = new MySqlCommand(sql, connection))
                 {
+                    command.Parameters.AddWithValue("@id", id);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
                     {
@@ -306,64 +307,51 @@ namespace Inmobiliaria_.Net.Repositorios
             return inmueble;
         }
 
-
-
-        // [Actualizar Inquilino]
-        /*        public void ActualizarInquilino(Inquilino inquilino)
+        // [Actualizar Inmueble]
+        public void ActualizarInmueble(Inmueble inmueble)
         {
             using (var connection = new MySqlConnection(ConnectionString))
             {
-                var sql = @$"UPDATE inquilino SET
-                            {nameof(Inquilino.Nombre)} = @{nameof(Inquilino.Nombre)},
-                            {nameof(Inquilino.Apellido)} = @{nameof(Inquilino.Apellido)},
-                            {nameof(Inquilino.Dni)} = @{nameof(Inquilino.Dni)},
-                            {nameof(Inquilino.Direccion)} = @{nameof(Inquilino.Direccion)},
-                            {nameof(Inquilino.Telefono)} = @{nameof(Inquilino.Telefono)},
-                            {nameof(Inquilino.Correo)} = @{nameof(Inquilino.Correo)}
-                        WHERE {nameof(Inquilino.Id_inquilino)} = @{nameof(Inquilino.Id_inquilino)}";
+                var sql = @$"UPDATE Inmueble SET
+                            {nameof(Inmueble.Direccion)} = @{nameof(Inmueble.Direccion)},
+                            {nameof(Inmueble.Uso)} = @{nameof(Inmueble.Uso)},
+                            {nameof(Inmueble.Id_tipo)} = @{nameof(Inmueble.Id_tipo)},
+                            {nameof(Inmueble.Cantidad_Ambientes)} = @{nameof(Inmueble.Cantidad_Ambientes)},
+                            {nameof(Inmueble.Precio_Alquiler)} = @{nameof(Inmueble.Precio_Alquiler)},
+                            {nameof(Inmueble.Latitud)} = @{nameof(Inmueble.Latitud)},
+                            {nameof(Inmueble.Longitud)} = @{nameof(Inmueble.Longitud)},
+                            {nameof(Inmueble.Activo)} = @{nameof(Inmueble.Activo)},
+                            {nameof(Inmueble.Disponible)} = @{nameof(Inmueble.Disponible)},
+                            {nameof(Inmueble.Id_propietario)} = @{nameof(Inmueble.Id_propietario)}
+                        WHERE {nameof(Inmueble.Id_inmueble)} = @{nameof(Inmueble.Id_inmueble)}";
 
                 using (var command = new MySqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Nombre)}", inquilino.Nombre);
-                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Apellido)}", inquilino.Apellido);
-                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Dni)}", inquilino.Dni);
-                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Direccion)}", inquilino.Direccion);
-                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Telefono)}", inquilino.Telefono);
-                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Correo)}", inquilino.Correo);
-                    command.Parameters.AddWithValue($"@{nameof(Inquilino.Id_inquilino)}", inquilino.Id_inquilino);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_inmueble)}", inmueble.Id_inmueble);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Direccion)}", inmueble.Direccion);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Uso)}", inmueble.Uso);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_tipo)}", inmueble.Id_tipo);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Cantidad_Ambientes)}", inmueble.Cantidad_Ambientes);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Precio_Alquiler);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Latitud)}", inmueble.Latitud);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Longitud)}", inmueble.Longitud);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Activo)}", inmueble.Activo);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Disponible)}", inmueble.Disponible);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_propietario)}", inmueble.Id_propietario);
 
                     connection.Open();
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
             }
-        }*/
+        }
 
         // [Eliminar de BD Inmueble]
         public int EliminarInmueble(int id)
         {
             using (var connection = new MySqlConnection(ConnectionString))
             {
-                var sql = @$"DELETE FROM inquilino 
-                WHERE {nameof(Inmueble.Id_inmueble)} = @{nameof(Inmueble.Id_inmueble)}";
-                using (var command = new MySqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_inmueble)}", id);
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-            }
-            return 0;
-        }
-
-        // [Eliminar de Tabla Inmueble]
-        public int CambiarEstadoInmueble(int id)
-        {
-            using (var connection = new MySqlConnection(ConnectionString))
-            {
-                var sql = @$"UPDATE inmueble 
-                SET activo = 0 
+                var sql = @$"DELETE FROM inmueble 
                 WHERE {nameof(Inmueble.Id_inmueble)} = @{nameof(Inmueble.Id_inmueble)}";
                 using (var command = new MySqlCommand(sql, connection))
                 {
