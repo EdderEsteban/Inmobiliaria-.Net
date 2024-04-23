@@ -1,0 +1,72 @@
+@model IList<Contrato>
+@{
+    ViewData["Title"] = "Contratos";
+    var listaInmueblesDisponibles = ViewBag.inmueblesDisponibles as List<Inmueble>;
+    var listaInquilinos = ViewBag.inquilinos as List<Inquilino>;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Listado de Contratos</h1>
+    <a asp-action="CrearContrato">Crear</a>
+    <table class="table table-sm table-striped table-hover">
+        <tr>
+            <th>N° de Contrato</th>
+            <th>Inquilino</th>
+            <th>Inmueble</th>
+            <th>Fecha de Inicio</th>
+            <th>Fecha de Fin</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+        @foreach (var contrato in Model)
+        {
+            <tr>
+                <td>@contrato.Id_contrato</td>
+                <td>
+                    @{
+                        var inquilino = listaInquilinos.FirstOrDefault(i => i.Id_inquilino == contrato.Id_inquilino);
+                        if (inquilino != null)
+                        {
+                            @inquilino.Nombre 
+                        }
+                        else
+                        {
+                            <text>Nombre no encontrado</text>
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        var inmueble = listaInmueblesDisponibles.FirstOrDefault(i => i.Id_inmueble == contrato.Id_inmueble);
+                        if (inmueble != null)
+                        {
+                            @inmueble.Direccion
+                        }
+                        else
+                        {
+                            <text>Dirección no encontrada</text>
+                        }
+                    }
+                </td>
+                <td>@contrato.Fecha_inicio.ToString("dd/MM/yyyy")</td>
+                <td>@contrato.Fecha_fin.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @{
+                        var precio = listaInmueblesDisponibles.FirstOrDefault(i => i.Id_inmueble == contrato.Id_inmueble);
+                        if (inmueble != null)
+                        {
+                            @inmueble.Precio_Alquiler
+                        }
+                        else
+                        {
+                            <text>Sin Datos</text>
+                        }
+                    }
+                <td>
+                    <a asp-action="EditarContrato" asp-route-id="@contrato.Id_contrato">Editar</a> |
+                    <a asp-action="EliminarContrato" asp-route-id="@contrato.Id_contrato">Borrar</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -346,6 +346,23 @@ namespace Inmobiliaria_.Net.Repositorios
             }
         }
 
+        // [Cambiar Disponibilidad de Inmueble]
+        public int CambiarEstadoInmueble(int id)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                var sql = $"UPDATE inmueble SET {nameof(Inmueble.Disponible)} = 0 WHERE {nameof(Inmueble.Id_inmueble)} = @{nameof(Inmueble.Id_inmueble)}";
+                using (var command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_inmueble)}", id);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            return 0;
+        }
+
+
         // [Eliminar de BD Inmueble]
         public int EliminarInmueble(int id)
         {

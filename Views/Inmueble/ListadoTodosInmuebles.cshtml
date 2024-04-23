@@ -84,6 +84,8 @@
                         asp-route-Id="@inmueble?.Id_inmueble" title="Editar Inmueble">edit_note</a> 
                     <a class="material-symbols-outlined" href="#" onclick="confirmarEliminacion(@inmueble.Id_inmueble)" 
                     title="Borrar Inmueble">delete</a>
+                    <a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="DetallesInmueble"
+                        asp-route-Id="@inmueble?.Id_inmueble" title="Detalles Inmueble">info</a>
                 </td>
             </tr>
         }

@@ -93,4 +93,10 @@ public class InmuebleController : Controller
         return RedirectToAction(nameof(ListadoTodosInmuebles));
     }
     
+    public IActionResult DetallesInmueble(int id)
+    {
+        RepositorioInmueble repo = new RepositorioInmueble();
+        var inmueble = repo.ObtenerInmueble(id);
+        return View(inmueble);
+    }
 }

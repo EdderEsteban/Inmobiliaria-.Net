@@ -1,0 +1,41 @@
+@model Contrato
+@{
+    ViewData["Title"] = "Editar Contrato";
+}
+
+<h2>Editar Contrato</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-action="ModificarContrato">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id_contrato" />
+                <div class="form-group">
+                    <label asp-for="Id_inquilino" class="control-label">ID Inquilino</label>
+                    <input asp-for="Id_inquilino" class="form-control" />
+                    <span asp-validation-for="Id_inquilino" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Id_inmueble" class="control-label">ID Inmueble</label>
+                    <input asp-for="Id_inmueble" class="form-control" />
+                    <span asp-validation-for="Id_inmueble" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Fecha_inicio" class="control-label">Fecha de Inicio</label>
+                    <input asp-for="Fecha_inicio" class="form-control" />
+                    <span asp-validation-for="Fecha_inicio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Fecha_fin" class="control-label">Fecha de Fin</label>
+                    <input asp-for="Fecha_fin" class="form-control" />
+                    <span asp-validation-for="Fecha_fin" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    <a asp-action="ListadoContratos" class="btn btn-primary">Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
