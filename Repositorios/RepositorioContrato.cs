@@ -136,5 +136,42 @@ namespace Inmobiliaria_.Net.Repositorios
                 }
             }
         }
+    
+        public IList<Contrato> ListarContratosPorInmueble(int idInmueble)
+{
+    var contratos = new List<Contrato>();
+
+    using (var connection = new MySqlConnection(ConnectionString))
+    {
+        var sql = "SELECT id_contrato, id_inquilino, id_inmueble, fecha_inicio, fecha_fin " +
+                  "FROM contrato " +
+                  "WHERE id_inmueble = @IdInmueble";
+
+        using (var command = new MySqlCommand(sql, connection))
+        {
+            command.Parameters.AddWithValue("@IdInmueble", idInmueble);
+
+            connection.Open();
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    contratos.Add(new Contrato
+                    {
+                        Id_contrato = reader.GetInt32("id_contrato"),
+                        Id_inquilino = reader.GetInt32("id_inquilino"),
+                        Id_inmueble = reader.GetInt32("id_inmueble"),
+                        Fecha_inicio = reader.GetDateTime("fecha_inicio"),
+                        Fecha_fin = reader.GetDateTime("fecha_fin")
+                    });
+                }
+            }
+            connection.Close();
+        }
+    }
+
+    return contratos;
+}
+ 
     }
 }

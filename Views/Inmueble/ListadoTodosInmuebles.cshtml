@@ -2,14 +2,20 @@
 @{
     ViewData["Title"] = "Inmuebles";
 }
+@if (TempData["AlertMessage"] != null)
+{
+    <div id="alertMessage" class="alert alert-success">
+        @TempData["AlertMessage"]
+    </div>
+}
 
 <div class="text-center ">
     <h1 class="display-4">Listado de Todos los Inmuebles</h1>
     <div class="text-start mb-3">
         <a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="CrearInmueble"
-        title="Añadir Inmueble">add_business</a>
+            title="Añadir Inmueble">add_business</a>
         <div class="mb-3">
-            <strong><label for="txtBusqueda" class="form-label" >Buscar:</label></strong> 
+            <strong><label for="txtBusqueda" class="form-label">Buscar:</label></strong>
             <input type="text" id="txtBusqueda" class="form-control-sm" placeholder="Buscar Inmueble...">
         </div>
     </div>
@@ -81,9 +87,9 @@
                 <td>@($"{inmueble?.Propietario?.Nombre} {inmueble?.Propietario?.Apellido}" ?? "")</td>
                 <td name="Acciones">
                     <a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="EditarInmueble"
-                        asp-route-Id="@inmueble?.Id_inmueble" title="Editar Inmueble">edit_note</a> 
-                    <a class="material-symbols-outlined" href="#" onclick="confirmarEliminacion(@inmueble.Id_inmueble)" 
-                    title="Borrar Inmueble">delete</a>
+                        asp-route-Id="@inmueble?.Id_inmueble" title="Editar Inmueble">edit_note</a>
+                    <a class="material-symbols-outlined" href="#" onclick="confirmarEliminacion(@inmueble.Id_inmueble)"
+                        title="Borrar Inmueble">delete</a>
                     <a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="DetallesInmueble"
                         asp-route-Id="@inmueble?.Id_inmueble" title="Detalles Inmueble">info</a>
                 </td>
@@ -116,4 +122,14 @@
             window.location.href = `@Url.Action("EliminarInmueble", "Inmueble")?id=${id}`;
         }
     }
+
+    // 
+    // Mostrar el mensaje y Ocultar después de 5 segundos
+    setTimeout(function () {
+        var alertMessage = document.getElementById('alertMessage');
+        if (alertMessage != null) {
+            alertMessage.style.display = 'none';
+        }
+    }, 5000); // 5 segundos
+
 </script>

@@ -310,6 +310,48 @@ namespace Inmobiliaria_.Net.Repositorios
         // [Actualizar Inmueble]
         public void ActualizarInmueble(Inmueble inmueble)
         {
+            
+
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                var sql = @$"UPDATE Inmueble SET
+                            {nameof(Inmueble.Direccion)} = @{nameof(Inmueble.Direccion)},
+                            {nameof(Inmueble.Uso)} = @{nameof(Inmueble.Uso)},
+                            {nameof(Inmueble.Id_tipo)} = @{nameof(Inmueble.Id_tipo)},
+                            {nameof(Inmueble.Cantidad_Ambientes)} = @{nameof(Inmueble.Cantidad_Ambientes)},
+                            {nameof(Inmueble.Precio_Alquiler)} = @{nameof(Inmueble.Precio_Alquiler)},
+                            {nameof(Inmueble.Latitud)} = @{nameof(Inmueble.Latitud)},
+                            {nameof(Inmueble.Longitud)} = @{nameof(Inmueble.Longitud)},
+                            {nameof(Inmueble.Activo)} = @{nameof(Inmueble.Activo)},
+                            {nameof(Inmueble.Disponible)} = @{nameof(Inmueble.Disponible)},
+                            {nameof(Inmueble.Id_propietario)} = @{nameof(Inmueble.Id_propietario)}
+                        WHERE {nameof(Inmueble.Id_inmueble)} = @{nameof(Inmueble.Id_inmueble)}";
+
+                using (var command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_inmueble)}", inmueble.Id_inmueble);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Direccion)}", inmueble.Direccion);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Uso)}", inmueble.Uso);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_tipo)}", inmueble.Id_tipo);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Cantidad_Ambientes)}", inmueble.Cantidad_Ambientes);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Precio_Alquiler)}", inmueble.Precio_Alquiler);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Latitud)}", inmueble.Latitud);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Longitud)}", inmueble.Longitud);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Activo)}", inmueble.Activo);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Disponible)}", inmueble.Disponible);
+                    command.Parameters.AddWithValue($"@{nameof(Inmueble.Id_propietario)}", inmueble.Id_propietario);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+        }
+
+        public void ActualizarInmuebleExceptoDisponible(Inmueble inmueble)
+        {
+            
+
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 var sql = @$"UPDATE Inmueble SET
