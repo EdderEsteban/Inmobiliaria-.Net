@@ -17,7 +17,7 @@ namespace Inmobiliaria_.Net.Repositorios
             var contratos = new List<Contrato>();
             using (var connection = new MySqlConnection(ConnectionString))
             {
-                var sql = "SELECT id_contrato, id_inquilino, id_inmueble, fecha_inicio, fecha_fin FROM contrato";
+                var sql = "SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin FROM contrato";
                 using (var command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
@@ -30,6 +30,7 @@ namespace Inmobiliaria_.Net.Repositorios
                                 Id_contrato = reader.GetInt32("id_contrato"),
                                 Id_inquilino = reader.GetInt32("id_inquilino"),
                                 Id_inmueble = reader.GetInt32("id_inmueble"),
+                                Monto = reader.GetInt32("monto"),
                                 Fecha_inicio = reader.GetDateTime("fecha_inicio"),
                                 Fecha_fin = reader.GetDateTime("fecha_fin")
                             });
@@ -46,13 +47,14 @@ namespace Inmobiliaria_.Net.Repositorios
             int id = 0;
             using (var connection = new MySqlConnection(ConnectionString))
             {
-                var sql = @"INSERT INTO contrato (id_inquilino, id_inmueble, fecha_inicio, fecha_fin)
-                            VALUES (@id_inquilino, @id_inmueble, @fecha_inicio, @fecha_fin);
+                var sql = @"INSERT INTO contrato (id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin)
+                            VALUES (@id_inquilino, @id_inmueble, @monto, @fecha_inicio, @fecha_fin);
                             SELECT LAST_INSERT_ID();";
                 using (var command = new MySqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@id_inquilino", contrato.Id_inquilino);
                     command.Parameters.AddWithValue("@id_inmueble", contrato.Id_inmueble);
+                    command.Parameters.AddWithValue("@monto", contrato.Monto);
                     command.Parameters.AddWithValue("@fecha_inicio", contrato.Fecha_inicio);
                     command.Parameters.AddWithValue("@fecha_fin", contrato.Fecha_fin);
 
@@ -69,7 +71,7 @@ namespace Inmobiliaria_.Net.Repositorios
             Contrato contrato = null;
             using (var connection = new MySqlConnection(ConnectionString))
             {
-                var sql = @"SELECT id_contrato, id_inquilino, id_inmueble, fecha_inicio, fecha_fin
+                var sql = @"SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin
                             FROM contrato
                             WHERE id_contrato = @id_contrato";
                 using (var command = new MySqlCommand(sql, connection))
@@ -85,6 +87,7 @@ namespace Inmobiliaria_.Net.Repositorios
                                 Id_contrato = reader.GetInt32("id_contrato"),
                                 Id_inquilino = reader.GetInt32("id_inquilino"),
                                 Id_inmueble = reader.GetInt32("id_inmueble"),
+                                Monto = reader.GetInt32("monto"),
                                 Fecha_inicio = reader.GetDateTime("fecha_inicio"),
                                 Fecha_fin = reader.GetDateTime("fecha_fin")
                             };
@@ -103,6 +106,7 @@ namespace Inmobiliaria_.Net.Repositorios
                 var sql = @"UPDATE contrato
                             SET id_inquilino = @id_inquilino,
                                 id_inmueble = @id_inmueble,
+                                monto = @monto,
                                 fecha_inicio = @fecha_inicio,
                                 fecha_fin = @fecha_fin
                             WHERE id_contrato = @id_contrato";
@@ -110,6 +114,7 @@ namespace Inmobiliaria_.Net.Repositorios
                 {
                     command.Parameters.AddWithValue("@id_inquilino", contrato.Id_inquilino);
                     command.Parameters.AddWithValue("@id_inmueble", contrato.Id_inmueble);
+                    command.Parameters.AddWithValue("@monto", contrato.Monto);
                     command.Parameters.AddWithValue("@fecha_inicio", contrato.Fecha_inicio);
                     command.Parameters.AddWithValue("@fecha_fin", contrato.Fecha_fin);
                     command.Parameters.AddWithValue("@id_contrato", contrato.Id_contrato);
@@ -143,7 +148,7 @@ namespace Inmobiliaria_.Net.Repositorios
 
     using (var connection = new MySqlConnection(ConnectionString))
     {
-        var sql = "SELECT id_contrato, id_inquilino, id_inmueble, fecha_inicio, fecha_fin " +
+        var sql = "SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin " +
                   "FROM contrato " +
                   "WHERE id_inmueble = @IdInmueble";
 
@@ -161,6 +166,7 @@ namespace Inmobiliaria_.Net.Repositorios
                         Id_contrato = reader.GetInt32("id_contrato"),
                         Id_inquilino = reader.GetInt32("id_inquilino"),
                         Id_inmueble = reader.GetInt32("id_inmueble"),
+                        Monto = reader.GetInt32("monto"),
                         Fecha_inicio = reader.GetDateTime("fecha_inicio"),
                         Fecha_fin = reader.GetDateTime("fecha_fin")
                     });

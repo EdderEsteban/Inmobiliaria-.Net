@@ -1,7 +1,7 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria_.Net.Models;
 using Inmobiliaria_.Net.Repositorios;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria_.Net.Controllers;
 
@@ -21,13 +21,13 @@ public class InmuebleController : Controller
         return View(lista);
     }
 
-
     public IActionResult ListadoInmueblesDisponibles()
     {
         RepositorioInmueble repo = new RepositorioInmueble();
         var lista = repo.ListarInmueblesDisponibles();
         return View(lista);
     }
+
     [HttpGet]
     public IActionResult CrearInmueble()
     {
@@ -47,15 +47,14 @@ public class InmuebleController : Controller
     [HttpPost]
     public IActionResult GuardarInmueble(Inmueble inmueble)
     {
-        if (ModelState.IsValid)//Asegurarse q es valido el modelo
+        Console.WriteLine(inmueble);
+        if (ModelState.IsValid) //Asegurarse q es valido el modelo
         {
             RepositorioInmueble repo = new RepositorioInmueble();
             repo.GuardarNuevo(inmueble);
             return RedirectToAction(nameof(ListadoTodosInmuebles));
-
         }
         return View();
-
     }
 
     public IActionResult EditarInmueble(int id)
@@ -83,7 +82,9 @@ public class InmuebleController : Controller
             RepositorioContrato repoContrato = new RepositorioContrato();
 
             // Obtener todos los contratos asociados al inmueble
-            var contratosDelInmueble = repoContrato.ListarContratosPorInmueble(inmueble.Id_inmueble);
+            var contratosDelInmueble = repoContrato.ListarContratosPorInmueble(
+                inmueble.Id_inmueble
+            );
 
             // Verificar si existen contratos asociados al inmueble
             if (contratosDelInmueble.Count > 0)
@@ -102,13 +103,14 @@ public class InmuebleController : Controller
                         // Permitir la modificación de todos los campos excepto Disponible
                         inmueble.Disponible = inmuebleOriginal.Disponible; // Mantener el valor original de Disponible
                         repo.ActualizarInmuebleExceptoDisponible(inmueble);
-                        TempData["AlertMessage"] = "Se actualizó los datos excepto Disponible, ya que el inmueble tiene un contrato activo.";
+                        TempData["AlertMessage"] =
+                            "Se actualizó los datos excepto Disponible, ya que el inmueble tiene un contrato activo.";
                     }
                 }
                 else
                 {
                     // No se encontro el inmueble original en la BD
-                    return View("EditarInmueble", inmueble); 
+                    return View("EditarInmueble", inmueble);
                 }
             }
             else
@@ -122,7 +124,6 @@ public class InmuebleController : Controller
 
         return View("EditarInmueble", inmueble);
     }
-
 
     public IActionResult EliminarInmueble(int id)
     {

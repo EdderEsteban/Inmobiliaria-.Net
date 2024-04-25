@@ -16,6 +16,8 @@ namespace Inmobiliaria_.Net.Models
         [Required(ErrorMessage = "El Id del inmueble es obligatorio.")]
         public int Id_inmueble { get; set; }
 
+        public int Monto { get; set; }
+
         [Required(ErrorMessage = "La fecha de inicio es obligatoria.")]
         [Display(Name = "Fecha de Inicio")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
