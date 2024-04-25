@@ -135,6 +135,7 @@ namespace Inmobiliaria_.Net.Repositorios
             return inquilino;
         }
 
+        
         // [Actualizar Inquilino]
         public void ActualizarInquilino(Inquilino inquilino)
         {

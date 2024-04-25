@@ -42,8 +42,8 @@
                 </td>
                 <td>@($"{inmueble?.Propietario?.Nombre} {inmueble?.Propietario?.Apellido}" ?? "")</td>
                 <td name="Acciones">
-                    <a class="material-symbols-outlined" asp-controller="Contrato" asp-action="CrearContratoId"
-                        asp-route-Id="@inmueble?.Id_inmueble" title="Crear Contrato">note_add</a>
+                    <a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="DetallesInmueble"
+                        asp-route-Id="@inmueble?.Id_inmueble" title="Detalles Inmueble">info</a>
                 </td>
             </tr>
         }

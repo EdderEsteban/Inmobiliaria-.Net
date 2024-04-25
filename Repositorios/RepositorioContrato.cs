@@ -68,7 +68,7 @@ namespace Inmobiliaria_.Net.Repositorios
 
         public Contrato ObtenerContrato(int id)
         {
-            Contrato contrato = null;
+            Contrato? contrato = null;
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 var sql = @"SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin
@@ -77,6 +77,40 @@ namespace Inmobiliaria_.Net.Repositorios
                 using (var command = new MySqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@id_contrato", id);
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            contrato = new Contrato
+                            {
+                                Id_contrato = reader.GetInt32("id_contrato"),
+                                Id_inquilino = reader.GetInt32("id_inquilino"),
+                                Id_inmueble = reader.GetInt32("id_inmueble"),
+                                Monto = reader.GetInt32("monto"),
+                                Fecha_inicio = reader.GetDateTime("fecha_inicio"),
+                                Fecha_fin = reader.GetDateTime("fecha_fin")
+                            };
+                        }
+                    }
+                    connection.Close();
+                }
+            }
+            return contrato;
+        }
+
+        public Contrato ObtenerContratoInmueble(int id)
+        {
+            Contrato? contrato = null;
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                var sql = @"SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin
+                            FROM contrato
+                            WHERE id_inmueble = @id_inmueble";
+                            
+                using (var command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@id_inmueble", id);
                     connection.Open();
                     using (var reader = command.ExecuteReader())
                     {

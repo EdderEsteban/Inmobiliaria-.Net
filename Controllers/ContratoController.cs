@@ -48,6 +48,21 @@ namespace Inmobiliaria_.Net.Controllers
             return View();
         }
 
+        public IActionResult CrearContratoId(int id)
+        {
+            //Enviar la lista de Inmuebles Disponibles
+            RepositorioInmueble repoInmueble = new RepositorioInmueble();
+            var inmueble = repoInmueble.ObtenerInmueble(id);
+            ViewBag.inmueble = inmueble;
+
+            // Enviar la lista de Inquilinos
+            RepositorioInquilino repoInquilino = new RepositorioInquilino();
+            var listaInquilinos = repoInquilino.ListarInquilinos();
+            ViewBag.inquilinos = listaInquilinos;
+            
+            return View();
+        }
+
         [HttpPost]
         public IActionResult GuardarContrato(Contrato contrato)
         {

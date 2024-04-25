@@ -1,1 +1,47 @@
-aca va algo...
+@model Inmueble
+
+@{
+    ViewData["Title"] = "Editar Inmueble";
+    var contrato = ViewBag.contrato;
+    var propietario = ViewBag.propietario;
+    var inquilino = ViewBag.inquilino;
+}
+
+<div class="text-center ">
+    <h1 class="display-4">Detalle del Inmueble</h1>
+
+</div>
+<table class="table table-sm table-striped table-hover">
+    <tr>
+        <th>Direccion</th>
+        <th>Tipo</th>
+        <th>Ambientes</th>
+        <th>Precio</th>
+        <th>N° Contrato</th>
+        <th>Monto del Contrato</th>
+        <th>Ubicacion</th>
+        <th>Propietario</th>
+        <th>Inquilino</th>
+        <th>Estado</th>
+    </tr>
+    <tr>
+        <td>@(Model.Direccion)</td>
+        <td>@(Model?.Tipo?.Tipo)</td>
+        <td>@(Model?.Cantidad_Ambientes)</td>
+        <td>@(Model?.Precio_Alquiler)</td>
+        <td>@((contrato != null) ? contrato.Id_contrato : "Este Inmueble no tiene Contrato.")</td>
+        <td>@((contrato != null) ? contrato.Monto : "Este Inmueble no tiene Contrato.")</td>
+        <td>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=@Model?.Latitud,@Model?.Longitud"
+                target="_blank">
+                <span class="material-symbols-outlined">
+                    home_pin
+                </span>
+            </a>
+        </td>
+        <td>@(propietario.Nombre) @(propietario.Apellido)</td>
+        <td>@((inquilino != null) ? inquilino.Nombre+" "+ inquilino.Apellido: "Este Inmueble no tiene Inquilino.")</td>
+    </tr>
+    
+</table>
+</div>

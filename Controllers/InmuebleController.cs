@@ -28,6 +28,13 @@ public class InmuebleController : Controller
         return View(lista);
     }
 
+
+public IActionResult ListadoInmueblesAlquilados()
+    {
+        RepositorioInmueble repo = new RepositorioInmueble();
+        var lista = repo.ListarInmueblesAlquilados();
+        return View(lista);
+    }
     [HttpGet]
     public IActionResult CrearInmueble()
     {
@@ -134,8 +141,28 @@ public class InmuebleController : Controller
 
     public IActionResult DetallesInmueble(int id)
     {
+        //Buscar el Inmueble
         RepositorioInmueble repo = new RepositorioInmueble();
         var inmueble = repo.ObtenerInmueble(id);
+
+        //Enviar el Contratos
+        RepositorioContrato repoContrato = new RepositorioContrato();
+        var contrato = repoContrato.ObtenerContratoInmueble(inmueble.Id_inmueble);
+        ViewBag.contrato = contrato;
+
+        //Enviar el propietarios
+        RepositorioPropietario repoProp = new RepositorioPropietario();
+        var propietario = repoProp.ObtenerPropietario(inmueble.Id_propietario);
+        ViewBag.propietario = propietario;
+
+        //Enviar el Inquilino
+        if(contrato != null)
+        {
+        RepositorioInquilino repoInquil = new RepositorioInquilino();
+        var inquilino = repoInquil.ObtenerInquilino(contrato.Id_inquilino);
+        ViewBag.inquilino = inquilino;
+        }
+
         return View(inmueble);
     }
 }
