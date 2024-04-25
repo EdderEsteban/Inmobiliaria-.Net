@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-04-2024 a las 05:44:33
+-- Tiempo de generación: 25-04-2024 a las 09:05:52
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -34,6 +34,7 @@ CREATE TABLE `contrato` (
   `id_inmueble` int(11) DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
+  `activo` tinyint(1) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `fecha` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -42,10 +43,10 @@ CREATE TABLE `contrato` (
 -- Volcado de datos para la tabla `contrato`
 --
 
-INSERT INTO `contrato` (`id_contrato`, `id_inquilino`, `monto`, `id_inmueble`, `fecha_inicio`, `fecha_fin`, `id_usuario`, `fecha`) VALUES
-(12, 1, 0, 2, '2024-04-01', '2024-12-31', NULL, '2024-04-23 00:15:18'),
-(13, 2, 0, 7, '2024-04-01', '2024-12-31', NULL, '2024-04-23 00:22:19'),
-(14, 1, 330000, 1, '2024-04-01', '2025-04-30', NULL, '2024-04-25 00:42:44');
+INSERT INTO `contrato` (`id_contrato`, `id_inquilino`, `monto`, `id_inmueble`, `fecha_inicio`, `fecha_fin`, `activo`, `id_usuario`, `fecha`) VALUES
+(12, 1, 0, 2, '2024-04-01', '2024-12-31', 0, NULL, '2024-04-23 00:15:18'),
+(13, 2, 0, 7, '2024-04-01', '2024-12-31', 0, NULL, '2024-04-23 00:22:19'),
+(14, 1, 330000, 1, '2024-04-01', '2025-04-30', 0, NULL, '2024-04-25 00:42:44');
 
 -- --------------------------------------------------------
 
@@ -74,12 +75,12 @@ CREATE TABLE `inmueble` (
 --
 
 INSERT INTO `inmueble` (`id_inmueble`, `direccion`, `uso`, `id_tipo`, `cantidad_ambientes`, `precio_alquiler`, `latitud`, `longitud`, `activo`, `disponible`, `id_propietario`, `id_usuario`, `fecha`) VALUES
-(1, 'Pringles 330 Dpto 3', 'Residencial', 1, 3, 230.00, '-33.30107764626808', '-66.32826228920763', 1, 0, 1, NULL, '2024-04-03 23:16:50'),
-(2, 'Maipu 670', 'Comercial', 1, 3, 63000.00, '-33.30228322937067', '-66.33193927790455', 1, 0, 1, NULL, '2024-04-10 00:43:56'),
+(1, 'Pringles 330 Dpto 3', 'Residencial', 1, 3, 230.00, '-33.30107764626808', '-66.32826228920763', 1, 0, 3, NULL, '2024-04-03 23:16:50'),
+(2, 'Maipu 670', 'Comercial', 1, 3, 63000.00, '-33.30228322937067', '-66.33193927790455', 1, 0, 4, NULL, '2024-04-10 00:43:56'),
 (3, 'Concaran', 'Residencial', 1, 1, 56000.00, '-33.302314597600216', '-66.33191967583032', 1, 1, 1, NULL, '2024-04-12 16:58:33'),
-(5, 'Merlo', 'Comercial', 1, 3, 68000.00, '-33.30228322937067', '-66.33193927790455', 1, 1, 1, NULL, '2024-04-12 22:25:52'),
-(7, 'Santiago', 'Comercial', 1, 1, 900000.00, '-33.30228322937067', '-66.33193927790455', 1, 0, 1, NULL, '2024-04-13 01:02:44'),
-(8, 'La Punta', 'Residencial', 1, 4, 56000.00, '-33.30228322937067', '-66.31959623517908', 1, 1, 4, NULL, '2024-04-25 00:01:35');
+(5, 'Merlo', 'Comercial', 1, 3, 68000.00, '-33.30228322937067', '-66.33193927790455', 1, 1, 3, NULL, '2024-04-12 22:25:52'),
+(7, 'Santiago', 'Comercial', 1, 1, 900000.00, '-33.30228322937067', '-66.33193927790455', 1, 0, 4, NULL, '2024-04-13 01:02:44'),
+(8, 'La Punta', 'Residencial', 1, 4, 56000.00, '-33.30228322937067', '-66.31959623517908', 1, 1, 1, NULL, '2024-04-25 00:01:35');
 
 -- --------------------------------------------------------
 
