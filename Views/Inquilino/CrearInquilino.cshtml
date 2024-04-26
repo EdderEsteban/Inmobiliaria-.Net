@@ -3,11 +3,12 @@
     ViewData["Title"] = "Inquilinos";
 }
 
-<h2>Crear Inquilino</h2>
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 card">
+            <h2>Crear Inquilino</h2>
+
             <form method="post" asp-action="GuardarInquilino">
                 <div class="form-group">
                     <label asp-for="Nombre" class="control-label">Nombre</label>

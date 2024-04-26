@@ -13,7 +13,7 @@
             <input type="text" id="txtBusqueda" class="form-control-sm" placeholder="Buscar Propietario...">
         </div>
     </div>
-    <table id="tblPropietarios" class="table table-sm table-striped table-hover">
+    <table id="tblPropietarios" class="table table-sm table-striped table-hover table-light">
         <tr>
             <th>Nombre</th>
             <th>Apellido</th>
@@ -32,10 +32,10 @@
                 <td>@propietario.Direccion</td>
                 <td>@propietario.Telefono</td>
                 <td>@propietario.Correo</td>
-                <td><a asp-area="" asp-controller="Propietario" asp-action="EditarPropietario"
-                        asp-route-Id="@propietario.Id_Propietario">Editar</a> |
-                    <a asp-area="" asp-controller="Propietario" asp-action="EliminarPropietario"
-                        asp-route-Id="@propietario.Id_Propietario">Borrar</a>
+                <td><a class="material-symbols-outlined" asp-controller="Propietario" asp-action="EditarPropietario"
+                        asp-route-Id="@propietario.Id_Propietario">edit_note</a> |
+                    <a class="material-symbols-outlined" asp-controller="Propietario" asp-action="EliminarPropietario"
+                        asp-route-Id="@propietario.Id_Propietario">delete</a>
                 </td>
             </tr>
         }

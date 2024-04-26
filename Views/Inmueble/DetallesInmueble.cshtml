@@ -1,7 +1,7 @@
 @model Inmueble
 
 @{
-    ViewData["Title"] = "Editar Inmueble";
+    ViewData["Title"] = "Detalles Inmueble";
     var contrato = ViewBag.contrato;
     var propietario = ViewBag.propietario;
     var inquilino = ViewBag.inquilino;
@@ -9,9 +9,7 @@
 
 <div class="text-center ">
     <h1 class="display-4">Detalle del Inmueble</h1>
-
-</div>
-<table class="table table-sm table-striped table-hover">
+    <table class="table table-sm table-striped table-hover">
     <tr>
         <th>Direccion</th>
         <th>Tipo</th>
@@ -40,8 +38,10 @@
             </a>
         </td>
         <td>@(propietario.Nombre) @(propietario.Apellido)</td>
-        <td>@((inquilino != null) ? inquilino.Nombre+" "+ inquilino.Apellido: "Este Inmueble no tiene Inquilino.")</td>
+        <td>@((inquilino != null) ? inquilino.Nombre + " " + inquilino.Apellido : "Este Inmueble no tiene Inquilino.")</td>
+        <td></td>
     </tr>
-    
+
 </table>
+<a asp-action="ListadoTodosInmuebles" class="btn btn-primary">Volver</a>
 </div>
