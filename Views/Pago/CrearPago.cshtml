@@ -1,0 +1,54 @@
+@model Pago;
+
+@{
+    ViewData["Title"] = "Crear Pago";
+    var inmueble = ViewBag.inmueble;
+    var inquilino = ViewBag.inquilino;
+    var contrato = ViewBag.contratos;
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 card">
+            <h2>Pagar</h2>
+            <form method="post" asp-action="GuardarPago">
+                <div class="form-group">
+                    <label asp-for="Inquilino" class="control-label">Inquilino</label>
+                    <input asp-for="Inquilino" class="form-control" value="@(inquilino.Nombre) @(inquilino.Apellido)"/>
+                    <span asp-validation-for="Inquilino" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Id_Contrato" class="control-label">N° Contrato</label>
+                    <input asp-for="Id_Contrato" class="form-control" value="@(contrato.Id_contrato)"/>
+                    <span asp-validation-for="Id_Contrato" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Inmueble" class="control-label">Direccion</label>
+                    <input asp-for="Inmueble" class="form-control" value="@(inmueble.Direccion)"/>
+                    <span asp-validation-for="Inmueble" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Inmueble" class="control-label">Propietario</label>
+                    <input asp-for="Inmueble" class="form-control" value="@(inmueble.Propietario.Nombre) @(inmueble.Propietario.Apellido)"/>
+                    <span asp-validation-for="Inmueble" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Fecha_Pago" class="control-label">Fecha Pago</label>
+                    <input asp-for="Fecha_Pago" class="form-control" />
+                    <span asp-validation-for="Fecha_Pago" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Monto" class="control-label">Monto</label>
+                    <input asp-for="Monto" class="form-control" value="@(contrato.Monto)"/>
+                    <span asp-validation-for="Monto" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    <a asp-action="ListadoPagos" class="btn btn-primary">Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

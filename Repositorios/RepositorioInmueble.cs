@@ -75,6 +75,8 @@ namespace Inmobiliaria_.Net.Repositorios
             return inmuebles;
         }
 
+        
+
         //[Listar Inmuebles Activos]
         public IList<Inmueble> ListarInmueblesActivos()
         {

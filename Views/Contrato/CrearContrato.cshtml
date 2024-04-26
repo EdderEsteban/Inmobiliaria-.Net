@@ -4,13 +4,15 @@
     ViewData["Title"] = "Crear Contrato";
     var listaInmueblesDisponibles = ViewBag.inmueblesDisponibles as List<Inmueble>;
     var listaInquilinos = ViewBag.inquilinos as List<Inquilino>;
+
 }
 
-<h2>Crear Contrato</h2>
+
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 card">
+            <h2>Crear Contrato</h2>
             <form method="post" asp-action="GuardarContrato">
                 <div class="form-group mb-3">
                     <label asp-for="Inquilino" class="control-label">Inquilino</label>
@@ -51,11 +53,52 @@
                     <span asp-validation-for="Fecha_fin" class="text-danger"></span>
                 </div>
 
-                <div class="form-group mb-3">
+                <div name="Acciones" class="form-group mb-3">
                     <input type="submit" value="Guardar" class="btn btn-success" />
                     <a asp-action="ListadoContratos" class="btn btn-primary">Volver</a>
+                    
                 </div>
             </form>
+        </div>
+
+
+        <div class="col-md-8 card">
+            <h2>Inmueble</h2>
+            <div class="mb-3">
+            <strong><label for="txtBusqueda" class="form-label">Buscar:</label></strong>
+            <input type="text" id="txtBusqueda" class="form-control-sm" placeholder="Buscar Inmueble...">
+        </div>
+            <table>
+                <table id="tblInmuebles" class="table table-sm table-striped table-hover">
+                    <tr>
+                        <th>Direccion</th>
+                        <th>Uso</th>
+                        <th>Tipo</th>
+                        <th>Ambientes</th>
+                        <th>Precio</th>
+                        <th>Ubicacion</th>
+                        <th>Propietario</th>
+                    </tr>
+                    @foreach (var inmueble in listaInmueblesDisponibles)
+                    {
+                        <tr>
+                            <td>@inmueble.Direccion</td>
+                            <td>@inmueble.Uso</td>
+                            <td>@(inmueble?.Tipo?.Tipo)</td>
+                            <td>@inmueble.Cantidad_Ambientes</td>
+                            <td>@inmueble.Precio_Alquiler</td>
+                            <td>
+                                <a href="https://www.google.com/maps/search/?api=1&amp;query=@inmueble?.Latitud,@inmueble?.Longitud"
+                                    target="_blank">
+                                    <span class="material-symbols-outlined">
+                                        home_pin
+                                    </span>
+                                </a>
+                            </td>
+                            <td>@($"{inmueble?.Propietario?.Nombre} {inmueble?.Propietario?.Apellido}" ?? "")</td>
+                        </tr>
+                    }
+                </table>
         </div>
     </div>
 </div>
@@ -66,5 +109,22 @@
     });
     $(document).ready(function () {
         $('#listInmueble').select2();
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const inputBusqueda = document.getElementById("txtBusqueda");
+        const tablaInmuebles = document.getElementById("tblInmuebles");
+
+        inputBusqueda.addEventListener("input", function () {
+            const filtro = inputBusqueda.value.toLowerCase();
+            const filas = tablaInmuebles.querySelectorAll("tr");
+
+            filas.forEach(function (fila, index) {
+                if (index === 0) return;
+                const contenidoFila = fila.textContent.trim().toLowerCase();
+                const mostrarFila = contenidoFila.includes(filtro);
+                fila.style.display = mostrarFila ? "" : "none";
+            });
+        });
     });
 </script>

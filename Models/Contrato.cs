@@ -29,6 +29,8 @@ namespace Inmobiliaria_.Net.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime Fecha_fin { get; set; }
+
+        public Boolean Vigencia { get; set; }
         public int Id_usuario { get; set; }
 
         public DateTime Fecha { get; set; } = DateTime.Now; 

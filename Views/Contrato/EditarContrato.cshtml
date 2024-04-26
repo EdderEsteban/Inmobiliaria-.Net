@@ -1,6 +1,8 @@
 @model Contrato
 @{
     ViewData["Title"] = "Editar Contrato";
+    var inquilino = ViewBag.inquilino;
+    var inmueble = ViewBag.inmueble;
 }
 
 <h2>Editar Contrato</h2>
@@ -12,28 +14,33 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id_contrato" />
                 <div class="form-group">
-                    <label asp-for="Id_inquilino" class="control-label">ID Inquilino</label>
-                    <input asp-for="Id_inquilino" class="form-control" />
+                    <label asp-for="Inquilino" class="control-label">Inquilino</label>
+                    <input asp-for="Inquilino" class="form-control"
+                        value="@(ViewBag.Inquilino.Nombre) @(ViewBag.Inquilino.Apellido) @(ViewBag.inquilino.Dni)" />
+                    <input type="hidden" asp-for="Id_inquilino" />
                     <span asp-validation-for="Id_inquilino" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Id_inmueble" class="control-label">ID Inmueble</label>
-                    <input asp-for="Id_inmueble" class="form-control" />
+                    <label asp-for="Inmueble" class="control-label">Inmueble</label>
+                    <input asp-for="Inmueble" class="form-control"
+                        value="@(ViewBag.Inmueble.Direccion)" />
+                    <input type="hidden" asp-for="Id_inmueble" />
                     <span asp-validation-for="Id_inmueble" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Id_inmueble" class="control-label">Monto</label>
-                    <input asp-for="Monto" class="form-control" />
+                    <label asp-for="Monto" class="control-label">Monto</label>
+                    <input asp-for="Monto" class="form-control" value="@(Model.Monto)" />
                     <span asp-validation-for="Monto" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Fecha_inicio" class="control-label">Fecha de Inicio</label>
-                    <input asp-for="Fecha_inicio" class="form-control" />
+                    <input asp-for="Fecha_inicio" class="form-control" value="@Model.Fecha_inicio.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Fecha_inicio" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Fecha_fin" class="control-label">Fecha de Fin</label>
-                    <input asp-for="Fecha_fin" class="form-control" />
+                    <input asp-for="Fecha_fin" class="form-control" value="@Model.Fecha_fin.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Fecha_fin" class="text-danger"></span>
                 </div>
                 <div class="form-group">

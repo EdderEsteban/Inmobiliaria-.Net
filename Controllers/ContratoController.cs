@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using Inmobiliaria_.Net.Models;
 using Inmobiliaria_.Net.Repositorios;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Inmobiliaria_.Net.Controllers
 {
@@ -44,7 +44,7 @@ namespace Inmobiliaria_.Net.Controllers
             RepositorioInquilino repoInquilino = new RepositorioInquilino();
             var listaInquilinos = repoInquilino.ListarInquilinos();
             ViewBag.inquilinos = listaInquilinos;
-            
+
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace Inmobiliaria_.Net.Controllers
             RepositorioInquilino repoInquilino = new RepositorioInquilino();
             var listaInquilinos = repoInquilino.ListarInquilinos();
             ViewBag.inquilinos = listaInquilinos;
-            
+
             return View();
         }
 
@@ -70,10 +70,10 @@ namespace Inmobiliaria_.Net.Controllers
             {
                 RepositorioContrato repo = new RepositorioContrato();
                 repo.GuardarNuevo(contrato);
-                
+
                 RepositorioInmueble repoinmueble = new RepositorioInmueble();
                 repoinmueble.CambiarEstadoInmueble(contrato.Id_inmueble);
-                
+
                 return RedirectToAction(nameof(ListadoContratos));
             }
             return View("CrearContrato", contrato);
@@ -84,13 +84,35 @@ namespace Inmobiliaria_.Net.Controllers
         {
             if (id > 0)
             {
-                RepositorioContrato repo = new RepositorioContrato();
-                var contrato = repo.ObtenerContrato(id);
-                return View(contrato);
+                // Obtener el contrato específico según el ID
+                RepositorioContrato repoContrato = new RepositorioContrato();
+                var contrato = repoContrato.ObtenerContrato(id);
+
+                // Verificar si el contrato existe
+                if (contrato != null)
+                {
+                    //Enviar el Inmueble
+                    RepositorioInmueble repo = new RepositorioInmueble();
+                    var inmueble = repo.ObtenerInmueble(contrato.Id_inmueble);
+                    ViewBag.inmueble = inmueble;
+
+                    //Enviar el Inquilino
+                    RepositorioInquilino repoInquil = new RepositorioInquilino();
+                    var inquilino = repoInquil.ObtenerInquilino(contrato.Id_inquilino);
+                    ViewBag.inquilino = inquilino;
+
+                    return View(contrato);
+                }
+                else
+                {
+                    // Manejar el caso en que el contrato no existe
+                    return NotFound();
+                }
             }
             else
             {
-                return View();
+                // Manejar el caso en que el ID no es válido
+                return BadRequest();
             }
         }
 
