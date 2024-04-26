@@ -1,14 +1,13 @@
 @model IList<Pago>
 @{
     ViewData["Title"] = "Listado de Pagos";
-    var listaInmuebles = ViewBag.inmueblesDisponibles as List<Inmueble>;
+    var listaInmuebles = ViewBag.inmuebles as List<Inmueble>;
     var listaInquilinos = ViewBag.inquilinos as List<Inquilino>;
     var listaContratos = ViewBag.contratos as List<Contrato>;
 }
 
 <div class="text-center">
     <h1 class="display-4">Listado de Pagos</h1>
-    <a asp-action="CrearPago">Crear</a>
     <table class="table table-sm table-striped table-hover">
         <tr>
             <th>N° de Pago</th>
@@ -32,10 +31,6 @@
                         {
                             @inmueble.Direccion
                         }
-                        else
-                        {
-                            @("No disponible")
-                        }
                     }
                 </td>
                 <td>
@@ -47,11 +42,11 @@
                         }
                     }
                 </td>
-                <td>@(pago.Fecha_Pago)</td>
+                <td>@pago.Fecha_Pago.ToString("dd/MM/yyyy")</td>
                 <td>@(pago.Monto)</td>
                 <td>
                     <a asp-action="Editar" asp-route-id="@pago.Id_Pago">Editar</a>
-                    <a asp-action="Borrar" asp-route-id="@pago.Id_Pago">Borrar</a>
+                    <a asp-action="EliminarPago" asp-route-id="@pago.Id_Pago">Borrar</a>
                 </td>
             </tr>
         }

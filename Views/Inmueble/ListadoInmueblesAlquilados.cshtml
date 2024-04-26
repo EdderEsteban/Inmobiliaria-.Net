@@ -1,10 +1,12 @@
 @model IList<Inmueble>
 @{
     ViewData["Title"] = "Inmuebles";
+    var listaInquilinos = ViewBag.inquilinos as List<Inquilino>;
+    var listaContratos = ViewBag.contratos as List<Contrato>;
 }
 
 <div class="text-center ">
-    <h1 class="display-4">Listado de Inmuebles</h1>
+    <h1 class="display-4">Listado de Inmuebles Alquilados</h1>
     <div class="text-start mb-3">
         <a class="material-symbols-outlined" asp-controller="Inmueble" asp-action="CrearInmueble"
             title="Añadir Inmueble">add_business</a>
@@ -15,6 +17,7 @@
     </div>
     <table id="tblInmuebles" class="table table-sm table-striped table-hover">
         <tr>
+            <th>Inquilino</th>
             <th>Direccion</th>
             <th>Uso</th>
             <th>Tipo</th>
@@ -27,6 +30,15 @@
         @foreach (var inmueble in Model)
         {
             <tr>
+                <td>
+                    @{
+                        var contrato = listaContratos.FirstOrDefault(c => c.Id_inmueble == inmueble.Id_inmueble);
+                        var inquilino = listaInquilinos.FirstOrDefault(i => i.Id_inquilino == contrato.Id_contrato);
+                        if (inquilino != null)
+                        {
+                            @inquilino.Nombre
+                        }
+                    }</td>
                 <td>@(inmueble.Direccion)</td>
                 <td>@(inmueble.Uso)</td>
                 <td>@(inmueble?.Tipo?.Tipo)</td>

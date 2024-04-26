@@ -31,8 +31,20 @@ public class InmuebleController : Controller
 
 public IActionResult ListadoInmueblesAlquilados()
     {
+        // Enviar la lista de Inmuebles Alquilados
         RepositorioInmueble repo = new RepositorioInmueble();
         var lista = repo.ListarInmueblesAlquilados();
+
+        // Enviar la lista de los Contratos
+        RepositorioContrato repoContrato = new RepositorioContrato();
+        var contratos = repoContrato.ListarContratos();
+        ViewBag.contratos = contratos;
+
+        // Enviar la lista de Inquilinos
+        RepositorioInquilino repoInquilino = new RepositorioInquilino();
+        var inquilinos = repoInquilino.ListarInquilinos();
+        ViewBag.inquilinos = inquilinos;
+
         return View(lista);
     }
     [HttpGet]

@@ -33,7 +33,7 @@ namespace Inmobiliaria_.Net.Controllers
             //Enviar la lista de Contratos
             RepositorioContrato repoContratos = new RepositorioContrato();
             var listaContratos = repoContratos.ListarContratos();
-            ViewBag.listaContratos = listaContratos;
+            ViewBag.contratos = listaContratos;
 
             return View(lista);
         }
@@ -118,15 +118,15 @@ namespace Inmobiliaria_.Net.Controllers
                  return RedirectToAction(nameof(ListadoContratos));
              }
              return View("EditarContrato", contrato);
-         }
+         }*/
  
          [HttpGet]
-         public IActionResult EliminarContrato(int id)
+         public IActionResult EliminarPago(int id)
          {
-             RepositorioContrato repo = new RepositorioContrato();
-             repo.EliminarContrato(id);
-             return RedirectToAction(nameof(ListadoContratos));
+             RepositorioPago repo = new RepositorioPago();
+             repo.EliminarPago(id);
+             return RedirectToAction(nameof(ListadoPagos));
          }
-         */
+         
     }
 }

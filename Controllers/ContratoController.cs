@@ -74,7 +74,7 @@ namespace Inmobiliaria_.Net.Controllers
                 RepositorioInmueble repoinmueble = new RepositorioInmueble();
                 repoinmueble.CambiarEstadoInmueble(contrato.Id_inmueble);
 
-                return RedirectToAction(nameof(ListadoContratos));
+                return RedirectToAction("ListadoInmueblesAlquilados", "Inmueble");
             }
             return View("CrearContrato", contrato);
         }

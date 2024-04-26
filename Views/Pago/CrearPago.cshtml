@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Fecha_Pago" class="control-label">Fecha Pago</label>
-                    <input asp-for="Fecha_Pago" class="form-control" />
+                     <input asp-for="Fecha_Pago" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="Fecha_Pago" class="text-danger"></span>
                 </div>
                 <div class="form-group">
