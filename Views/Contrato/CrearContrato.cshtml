@@ -52,6 +52,11 @@
                     <input asp-for="Fecha_fin" type="date" class="form-control" />
                     <span asp-validation-for="Fecha_fin" class="text-danger"></span>
                 </div>
+                <div class="form-group mb-3">
+                    
+                    <input asp-for="Vigencia" type="checkbox" class="form-control" disabled/>
+                    
+                </div>
 
                 <div name="Acciones" class="form-group mb-3">
                     <input type="submit" value="Guardar" class="btn btn-success" />

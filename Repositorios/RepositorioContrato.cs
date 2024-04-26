@@ -17,7 +17,8 @@ namespace Inmobiliaria_.Net.Repositorios
             var contratos = new List<Contrato>();
             using (var connection = new MySqlConnection(ConnectionString))
             {
-                var sql = "SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin FROM contrato";
+                var sql = @"SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin, vigencia 
+                FROM contrato";
                 using (var command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
@@ -25,15 +26,28 @@ namespace Inmobiliaria_.Net.Repositorios
                     {
                         while (reader.Read())
                         {
-                            contratos.Add(new Contrato
+                            var contrato = new Contrato
                             {
                                 Id_contrato = reader.GetInt32("id_contrato"),
                                 Id_inquilino = reader.GetInt32("id_inquilino"),
                                 Id_inmueble = reader.GetInt32("id_inmueble"),
                                 Monto = reader.GetInt32("monto"),
                                 Fecha_inicio = reader.GetDateTime("fecha_inicio"),
-                                Fecha_fin = reader.GetDateTime("fecha_fin")
-                            });
+                                Fecha_fin = reader.GetDateTime("fecha_fin"),
+                                Vigencia = reader.GetBoolean("vigencia")
+                            };
+
+                            if (contrato.Fecha_fin < DateTime.Now)
+                            {
+                                contrato.Vigencia = false;
+                                ActualizarContrato(contrato);
+                            }
+                            else
+                            {
+                                contrato.Vigencia = true;
+                                ActualizarContrato(contrato);
+                            }
+                            contratos.Add(contrato);
                         }
                     }
                     connection.Close();
@@ -99,7 +113,7 @@ namespace Inmobiliaria_.Net.Repositorios
             return contrato;
         }
 
-        
+
 
         public Contrato ObtenerContratoInmueble(int id)
         {
@@ -109,7 +123,7 @@ namespace Inmobiliaria_.Net.Repositorios
                 var sql = @"SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin, vigencia
                             FROM contrato
                             WHERE id_inmueble = @id_inmueble";
-                            
+
                 using (var command = new MySqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@id_inmueble", id);
@@ -145,7 +159,8 @@ namespace Inmobiliaria_.Net.Repositorios
                                 id_inmueble = @id_inmueble,
                                 monto = @monto,
                                 fecha_inicio = @fecha_inicio,
-                                fecha_fin = @fecha_fin
+                                fecha_fin = @fecha_fin,
+                                vigencia = @vigencia
                             WHERE id_contrato = @id_contrato";
                 using (var command = new MySqlCommand(sql, connection))
                 {
@@ -155,6 +170,7 @@ namespace Inmobiliaria_.Net.Repositorios
                     command.Parameters.AddWithValue("@fecha_inicio", contrato.Fecha_inicio);
                     command.Parameters.AddWithValue("@fecha_fin", contrato.Fecha_fin);
                     command.Parameters.AddWithValue("@id_contrato", contrato.Id_contrato);
+                    command.Parameters.AddWithValue("@vigencia", contrato.Vigencia);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -178,43 +194,43 @@ namespace Inmobiliaria_.Net.Repositorios
                 }
             }
         }
-    
+
         public IList<Contrato> ListarContratosPorInmueble(int idInmueble)
-{
-    var contratos = new List<Contrato>();
-
-    using (var connection = new MySqlConnection(ConnectionString))
-    {
-        var sql = "SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin " +
-                  "FROM contrato " +
-                  "WHERE id_inmueble = @IdInmueble";
-
-        using (var command = new MySqlCommand(sql, connection))
         {
-            command.Parameters.AddWithValue("@IdInmueble", idInmueble);
+            var contratos = new List<Contrato>();
 
-            connection.Open();
-            using (var reader = command.ExecuteReader())
+            using (var connection = new MySqlConnection(ConnectionString))
             {
-                while (reader.Read())
+                var sql = "SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin " +
+                          "FROM contrato " +
+                          "WHERE id_inmueble = @IdInmueble";
+
+                using (var command = new MySqlCommand(sql, connection))
                 {
-                    contratos.Add(new Contrato
+                    command.Parameters.AddWithValue("@IdInmueble", idInmueble);
+
+                    connection.Open();
+                    using (var reader = command.ExecuteReader())
                     {
-                        Id_contrato = reader.GetInt32("id_contrato"),
-                        Id_inquilino = reader.GetInt32("id_inquilino"),
-                        Id_inmueble = reader.GetInt32("id_inmueble"),
-                        Monto = reader.GetInt32("monto"),
-                        Fecha_inicio = reader.GetDateTime("fecha_inicio"),
-                        Fecha_fin = reader.GetDateTime("fecha_fin")
-                    });
+                        while (reader.Read())
+                        {
+                            contratos.Add(new Contrato
+                            {
+                                Id_contrato = reader.GetInt32("id_contrato"),
+                                Id_inquilino = reader.GetInt32("id_inquilino"),
+                                Id_inmueble = reader.GetInt32("id_inmueble"),
+                                Monto = reader.GetInt32("monto"),
+                                Fecha_inicio = reader.GetDateTime("fecha_inicio"),
+                                Fecha_fin = reader.GetDateTime("fecha_fin")
+                            });
+                        }
+                    }
+                    connection.Close();
                 }
             }
-            connection.Close();
-        }
-    }
 
-    return contratos;
-}
- 
+            return contratos;
+        }
+
     }
 }

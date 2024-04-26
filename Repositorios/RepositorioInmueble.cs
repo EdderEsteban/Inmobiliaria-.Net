@@ -75,7 +75,7 @@ namespace Inmobiliaria_.Net.Repositorios
             return inmuebles;
         }
 
-        
+
 
         //[Listar Inmuebles Activos]
         public IList<Inmueble> ListarInmueblesActivos()
@@ -230,33 +230,33 @@ namespace Inmobiliaria_.Net.Repositorios
                             Enum.TryParse(uso, out usoEnum);
                             //Fin Manejo de los Enum en C#
 
-                            inmuebles.Add(
-                                new Inmueble
+                            var inmueble = new Inmueble
+                            {
+                                Id_inmueble = reader.GetInt32(nameof(Inmueble.Id_inmueble)),
+                                Direccion = reader.GetString(nameof(Inmueble.Direccion)),
+                                Uso = usoEnum,
+                                Tipo = new InmuebleTipo
                                 {
-                                    Id_inmueble = reader.GetInt32(nameof(Inmueble.Id_inmueble)),
-                                    Direccion = reader.GetString(nameof(Inmueble.Direccion)),
-                                    Uso = usoEnum,
-                                    Tipo = new InmuebleTipo
-                                    {
-                                        Tipo = reader.GetString("TipoInmueble"),
-                                    },
-                                    Cantidad_Ambientes = reader.GetInt32(
-                                        nameof(Inmueble.Cantidad_Ambientes)
-                                    ),
-                                    Precio_Alquiler = reader.GetDecimal(
-                                        nameof(Inmueble.Precio_Alquiler)
-                                    ),
-                                    Latitud = reader.GetString(nameof(Inmueble.Latitud)),
-                                    Longitud = reader.GetString(nameof(Inmueble.Longitud)),
-                                    Propietario = new Propietario
-                                    {
-                                        Nombre = reader.GetString("NombrePropietario"),
-                                        Apellido = reader.GetString("ApellidoPropietario"),
-                                    },
-                                    Activo = reader.GetBoolean(nameof(Inmueble.Activo)),
-                                    Disponible = reader.GetBoolean(nameof(Inmueble.Disponible)),
-                                }
-                            );
+                                    Tipo = reader.GetString("TipoInmueble"),
+                                },
+                                Cantidad_Ambientes = reader.GetInt32(
+                                    nameof(Inmueble.Cantidad_Ambientes)
+                                ),
+                                Precio_Alquiler = reader.GetDecimal(
+                                    nameof(Inmueble.Precio_Alquiler)
+                                ),
+                                Latitud = reader.GetString(nameof(Inmueble.Latitud)),
+                                Longitud = reader.GetString(nameof(Inmueble.Longitud)),
+                                Propietario = new Propietario
+                                {
+                                    Nombre = reader.GetString("NombrePropietario"),
+                                    Apellido = reader.GetString("ApellidoPropietario"),
+                                },
+                                Activo = reader.GetBoolean(nameof(Inmueble.Activo)),
+                                Disponible = reader.GetBoolean(nameof(Inmueble.Disponible)),
+                            };
+                            //logica de contrato y actualizacion
+                            inmuebles.Add(inmueble);
                         }
                         connection.Close();
                     }
@@ -339,7 +339,7 @@ namespace Inmobiliaria_.Net.Repositorios
                         inmueble.Longitud
                     );
                     comand.Parameters.AddWithValue($"@{nameof(Inmueble.Activo)}", inmueble.Activo);
-                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Disponible)}",inmueble.Disponible);
+                    comand.Parameters.AddWithValue($"@{nameof(Inmueble.Disponible)}", inmueble.Disponible);
                     comand.Parameters.AddWithValue(
                         $"@{nameof(Inmueble.Id_propietario)}",
                         inmueble.Id_propietario
