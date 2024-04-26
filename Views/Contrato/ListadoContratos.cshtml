@@ -5,8 +5,8 @@
     var listaInquilinos = ViewBag.inquilinos as List<Inquilino>;
 }
 
-<div class="text-center ">
-    <h1 class="display-4">Listado de Todos los Inmuebles</h1>
+<div class="text-center z-index-1">
+    <h1 class="display-4">Listado de Contratos</h1>
     <div class="text-start mb-3">
         <a class="material-symbols-outlined" asp-controller="Contrato" asp-action="CrearContrato"
             title="Añadir Contrato">add_business</a>
@@ -36,7 +36,7 @@
                         var inquilino = listaInquilinos.FirstOrDefault(i => i.Id_inquilino == contrato.Id_inquilino);
                         if (inquilino != null)
                         {
-                            @inquilino.Nombre @inquilino.Apellido
+                            @($"{inquilino.Nombre} {inquilino.Apellido}");
                         }
                         else
                         {

@@ -115,8 +115,36 @@
     cursor: pointer;
     transition: 0.4s;
   }
+
+  .submenu a {
+    position: relative;
+    color: #f9f9f9;
+    font-size: 20px;
+    font-family: "Euclid Circular A";
+    padding: 10px 0 10px 0;
+    text-decoration: none;
+    opacity: 0;
+    cursor: pointer;
+    transition: 0.4s;
+  }
   
   .menu a::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -26px;
+    translate: 0 -50%;
+    margin-top: 2px;
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid #ffffff;
+    border-right: 3px solid #ffffff;
+    opacity: 0;
+    rotate: 45deg;
+    transition: 0.3s;
+  }
+
+  .submenu a::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -135,6 +163,9 @@
   .menu a:hover::after {
     opacity: 1;
   }
+  .submenu a:hover::after {
+    opacity: 1;
+  }
   
   @keyframes appear {
     0% {
@@ -146,7 +177,7 @@
     }
   }
   
-  body.open .menu a {
+  body.open .menu a{
     opacity: 1;
     animation: appear 0.25s backwards;
   }
@@ -155,3 +186,17 @@
     z-index: 1;
     position: relative;
   }
+
+
+.submenu {
+    display: none;
+    position: relative;
+    z-index: 10; 
+    padding: 10px;
+    padding-left: 130px;
+}
+
+.inmueble:hover .submenu {
+    display: block;
+    
+}

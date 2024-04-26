@@ -11,7 +11,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="~/Inmobiliaria_.Net.styles.css" asp-append-version="true" />
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
     <!--Select2-->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -31,15 +31,25 @@
     <div class="menu">
         <nav class="links">
             <a class="enlace" style="animation-delay: 0.2s" asp-controller="Home" asp-action="Index">Inicio</a>
-            <a class="enlace" style="animation-delay: 0.3s" asp-controller="Inquilino"
+            <a class="enlace" style="animation-delay: 0.2s" asp-controller="Inquilino"
                 asp-action="ListadoInquilinos">Inquilinos</a>
-            <a class="enlace" style="animation-delay: 0.4s" asp-controller="Propietario" class=""
+            <a class="enlace" style="animation-delay: 0.2s" asp-controller="Propietario" class=""
                 asp-action="ListadoPropietarios">Propietarios</a>
-            <a class="enlace" style="animation-delay: 0.5s" asp-controller="Inmueble" class=""
-                asp-action="ListadoInmueblesDisponibles">Inmuebles</a>
-            <a class="enlace" style="animation-delay: 0.6s" asp-controller="Contrato"
+            <div class="enlace inmueble"><a href="#">Inmueble</a>
+                <div class="submenu">
+                    <ul>
+                        <li><a class="subenlace" asp-controller="Inmueble" asp-action="ListadoTodosInmuebles">Todos los
+                            Inmuebles</a></li>
+                        <li><a class="subenlace" asp-controller="Inmueble" asp-action="ListadoInmueblesAlquilados">Inmuebles
+                            Alquilados</a></li>
+                        <li><a class="subenlace" asp-controller="Inmueble"
+                            asp-action="ListadoInmueblesDisponibles">Inmuebles Disponibles</a></li>
+                    </ul>
+                </div>
+            </div>
+            <a class="enlace" style="animation-delay: 0.2s" asp-controller="Contrato"
                 asp-action="ListadoContratos">Contratos</a>
-            <a class="enlace" style="animation-delay: 0.7s" asp-controller="Pago" asp-action="ListadoPagos">Listado de
+            <a class="enlace" style="animation-delay: 0.2s" asp-controller="Pago" asp-action="ListadoPagos">Listado de
                 Pagos</a>
         </nav>
     </div>
@@ -53,7 +63,7 @@
         const toggleMenu = () => document.body.classList.toggle("open");
     </script>
 
-    
+
 
     @await RenderSectionAsync("Scripts", required: false)
 
