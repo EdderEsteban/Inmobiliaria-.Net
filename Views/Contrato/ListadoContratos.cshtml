@@ -5,106 +5,126 @@
     var listaInquilinos = ViewBag.inquilinos as List<Inquilino>;
 }
 
-<div class="text-center z-index-1">
-    <h1 class="display-4">Listado de Contratos</h1>
-    <div class="text-start mb-3">
-        <a class="material-symbols-outlined" asp-controller="Contrato" asp-action="CrearContrato"
-            title="Añadir Contrato">add_business</a>
-        <div class="mb-3">
-            <strong><label for="txtBusqueda" class="form-label">Buscar:</label></strong>
-            <input type="text" id="txtBusqueda" class="form-control-sm" placeholder="Buscar Contrato...">
+
+<h1 class="display-4">Listado de Contratos</h1>
+<div class="text-start mb-3">
+    <a class="material-symbols-outlined" asp-controller="Contrato" asp-action="CrearContrato"
+        title="Añadir Contrato">add_business</a>
+</div>
+<div class="row">
+    <div class="card border mb-3 col-md-3">
+        <div class="card-body">
+            <h5 class="text-center card-title">Buscar Contrato</h5>
+            <div class="row">
+                <form method="get" asp-controller="Contrato" asp-action="BuscarContrato">
+                    <div class="form-group ">
+                        <label class="label">
+                            <input type="number" class="input" id="IdContrato" name="IdContrato" placeholder=" ">
+                            <span class="label_name">ID del Contrato</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">
+                            <input type="text" class="input" id="NombreInquilino" name="NombreInquilino"
+                                placeholder=" ">
+                            <span class="label_name">Nombre del Inquilino</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">
+                            <input type="text" class="input" id="ApellidoInquilino" name="ApellidoInquilino"
+                                placeholder=" ">
+                            <span class="label_name">Apellido del Inquilino</span>
+                        </label>
+                    </div>
+
+                    <div class="contenedor">
+                        <input type="submit" value="Buscar" class="btn btn-primary"></input>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <table class="table table-sm table-striped table-hover table-light">
-        <tr>
-            <th>N° de Contrato</th>
-            <th>Inquilino</th>
-            <th>Inmueble</th>
-            <th>Fecha de Inicio</th>
-            <th>Fecha de Fin</th>
-            <th>Precio Inmueble</th>
-            <th>Monto Contrato</th>
-            <th>Vigencia</th>
-            <th>Acciones</th>
-        </tr>
-        @foreach (var contrato in Model)
-        {
+
+    <div class="text-center card border col-md-9">
+        <table class="table table-sm table-striped table-hover table-light">
             <tr>
-                <td>@contrato.Id_contrato</td>
-                <td>
-                    @{
-                        var inquilino = listaInquilinos.FirstOrDefault(i => i.Id_inquilino == contrato.Id_inquilino);
-                        if (inquilino != null)
-                        {
-                            @($"{inquilino.Nombre} {inquilino.Apellido}");
-                        }
-                        else
-                        {
-                            <text>Nombre no encontrado</text>
-                        }
-                    }
-                </td>
-                <td>
-                    @{
-                        var inmueble = listaInmueblesDisponibles.FirstOrDefault(i => i.Id_inmueble == contrato.Id_inmueble);
-                        if (inmueble != null)
-                        {
-                            @inmueble.Direccion
-                        }
-                        else
-                        {
-                            <text>Dirección no encontrada</text>
-                        }
-                    }
-                </td>
-                <td>@contrato.Fecha_inicio.ToString("dd/MM/yyyy")</td>
-                <td>@contrato.Fecha_fin.ToString("dd/MM/yyyy")</td>
-                <td>
-                    @{
-                        var precio = listaInmueblesDisponibles.FirstOrDefault(i => i.Id_inmueble == contrato.Id_inmueble);
-                        if (inmueble != null)
-                        {
-                            @inmueble.Precio_Alquiler
-                        }
-                        else
-                        {
-                            <text>Sin Datos</text>
-                        }
-                    }
-                </td>
-                <td>@contrato.Monto</td>
-                <td>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="switchVigencia-@contrato.Id_contrato"
-                        @(contrato.Vigencia ? "checked" : "") disabled />
-                        <label class="form-check-label" for="switchVigencia"></label>
-                    </div>
-                </td>
-
-
-                <td>
-                    <a class="material-symbols-outlined" asp-action="EditarContrato" asp-route-id="@contrato.Id_contrato">edit_note</a> |
-                    <a class="material-symbols-outlined" asp-action="EliminarContrato" asp-route-id="@contrato.Id_contrato">delete</a>
-                </td>
+                <th>N° de Contrato</th>
+                <th>Inquilino</th>
+                <th>Inmueble</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Fin</th>
+                <th>Precio Inmueble</th>
+                <th>Monto Contrato</th>
+                <th>Vigencia</th>
+                <th>Acciones</th>
             </tr>
-        }
-    </table>
+            @foreach (var contrato in Model)
+            {
+                <tr>
+                    <td>@contrato.Id_contrato</td>
+                    <td>
+                        @{
+                            var inquilino = listaInquilinos.FirstOrDefault(i => i.Id_inquilino == contrato.Id_inquilino);
+                            if (inquilino != null)
+                            {
+                                @($"{inquilino.Nombre} {inquilino.Apellido}")
+                                ;
+                            }
+                            else
+                            {
+                                <text>Nombre no encontrado</text>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var inmueble = listaInmueblesDisponibles.FirstOrDefault(i => i.Id_inmueble == contrato.Id_inmueble);
+                            if (inmueble != null)
+                            {
+                                @inmueble.Direccion
+                            }
+                            else
+                            {
+                                <text>Dirección no encontrada</text>
+                            }
+                        }
+                    </td>
+                    <td>@contrato.Fecha_inicio.ToString("dd/MM/yyyy")</td>
+                    <td>@contrato.Fecha_fin.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @{
+                            var precio = listaInmueblesDisponibles.FirstOrDefault(i => i.Id_inmueble == contrato.Id_inmueble);
+                            if (inmueble != null)
+                            {
+                                @inmueble.Precio_Alquiler
+                            }
+                            else
+                            {
+                                <text>Sin Datos</text>
+                            }
+                        }
+                    </td>
+                    <td>@contrato.Monto</td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="switchVigencia-@contrato.Id_contrato"
+                            @(contrato.Vigencia ? "checked" : "") disabled />
+                            <label class="form-check-label" for="switchVigencia"></label>
+                        </div>
+                    </td>
+
+
+                    <td>
+                        <a class="material-symbols-outlined" asp-action="EditarContrato"
+                            asp-route-id="@contrato.Id_contrato">edit_note</a> |
+                        <a class="material-symbols-outlined" asp-action="EliminarContrato"
+                            asp-route-id="@contrato.Id_contrato">delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const inputBusqueda = document.getElementById("txtBusqueda");
-        const tablaInmuebles = document.getElementById("tblInmuebles");
-
-        inputBusqueda.addEventListener("input", function () {
-            const filtro = inputBusqueda.value.toLowerCase();
-            const filas = tablaInmuebles.querySelectorAll("tr");
-
-            filas.forEach(function (fila, index) {
-                if (index === 0) return;
-                const contenidoFila = fila.textContent.trim().toLowerCase();
-                const mostrarFila = contenidoFila.includes(filtro);
-                fila.style.display = mostrarFila ? "" : "none";
-            });
-        });
-    });

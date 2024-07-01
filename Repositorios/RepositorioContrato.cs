@@ -56,6 +56,8 @@ namespace Inmobiliaria_.Net.Repositorios
             return contratos;
         }
 
+        
+
         public int GuardarNuevo(Contrato contrato)
         {
             int id = 0;

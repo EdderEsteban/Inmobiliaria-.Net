@@ -71,6 +71,8 @@ namespace Inmobiliaria_.Net.Controllers
              return View("CrearPago", pago);
          }
  
+       
+       
        /*  [HttpGet]
          public IActionResult EditarContrato(int id)
          {

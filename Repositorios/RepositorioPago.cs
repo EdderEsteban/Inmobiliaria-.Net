@@ -97,51 +97,14 @@ namespace Inmobiliaria_.Net.Repositorios
             return pago;
         }
 
-        /*public Contrato ObtenerContratoInmueble(int id)
-        {
-            Contrato? contrato = null;
-            using (var connection = new MySqlConnection(ConnectionString))
-            {
-                var sql = @"SELECT id_contrato, id_inquilino, id_inmueble, monto, fecha_inicio, fecha_fin, vigencia
-                            FROM contrato
-                            WHERE id_inmueble = @id_inmueble";
-                            
-                using (var command = new MySqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("@id_inmueble", id);
-                    connection.Open();
-                    using (var reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            contrato = new Contrato
-                            {
-                                Id_contrato = reader.GetInt32("id_contrato"),
-                                Id_inquilino = reader.GetInt32("id_inquilino"),
-                                Id_inmueble = reader.GetInt32("id_inmueble"),
-                                Monto = reader.GetInt32("monto"),
-                                Fecha_inicio = reader.GetDateTime("fecha_inicio"),
-                                Fecha_fin = reader.GetDateTime("fecha_fin"),
-                                Vigencia = reader.GetBoolean("vigencia")
-                            };
-                        }
-                    }
-                    connection.Close();
-                }
-            }
-            return contrato;
-        }*/
-
-        /*public void ActualizarContrato(Contrato contrato)
+       /*public void ActualizarPago(Pago pago)
         {
             using (var connection = new MySqlConnection(ConnectionString))
             {
-                var sql = @"UPDATE contrato
-                            SET id_inquilino = @id_inquilino,
-                                id_inmueble = @id_inmueble,
+                var sql = @"UPDATE Pago
+                                id_contrato = @id_inquilino,
+                                fecha_pago = @id_inmueble,
                                 monto = @monto,
-                                fecha_inicio = @fecha_inicio,
-                                fecha_fin = @fecha_fin
                             WHERE id_contrato = @id_contrato";
                 using (var command = new MySqlCommand(sql, connection))
                 {
@@ -159,7 +122,7 @@ namespace Inmobiliaria_.Net.Repositorios
             }
         }*/
 
-        public void EliminarPago(int id)
+        public void   EliminarPago(int id)
         {
             using (var connection = new MySqlConnection(ConnectionString))
             {

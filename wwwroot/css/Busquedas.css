@@ -1,0 +1,36 @@
+.label {
+  width: max-content;
+  margin: 25px auto;
+  display: grid;
+  grid-template-areas: "input";
+}
+
+.input {
+  grid-area: input;
+  width: 250px;
+  font: inherit;
+  border-radius: 10px;
+  border: 1px solid gray;
+  padding: 0.5rem 1.5rem;
+}
+
+.label_name {
+  grid-area: input;
+  z-index: 100;
+  width: max-content;
+  margin-left: 1rem;
+  padding: 0.5rem;
+  align-self: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.input:focus + .label_name,
+.input:not(:placeholder-shown) + .label_name {
+  transform: translateY(-60%) scale(0.9);
+  background-color: white;
+}
+
+

@@ -33,6 +33,26 @@ namespace Inmobiliaria_.Net.Controllers
         }
 
         [HttpGet]
+        public IActionResult BuscarContrato(int IdContrato, String? NombreInquilino)
+        {
+            //Enviar la lista de Inmuebles Disponibles
+            RepositorioInmueble repoInmueble = new RepositorioInmueble();
+            var listaInmueblesDisponibles = repoInmueble.ListarTodosInmuebles();
+            ViewBag.inmueblesDisponibles = listaInmueblesDisponibles;
+
+            // Enviar la lista de Inquilinos
+            RepositorioInquilino repoInquilino = new RepositorioInquilino();
+            var listaInquilinos = repoInquilino.ListarInquilinos();
+            ViewBag.inquilinos = listaInquilinos;
+
+            //Enviar la lista de Contratos
+            RepositorioContrato repo = new RepositorioContrato();
+            var ListarContratos = repo.ListarContratos();
+            ViewBag.contratos = ListarContratos;
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult CrearContrato()
         {
             //Enviar la lista de Inmuebles Disponibles
